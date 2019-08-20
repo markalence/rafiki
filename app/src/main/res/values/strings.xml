@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">rafiki</string>
+    <string name="DATE">date</string>
+    <string name="RECORDED_SESSIONS">recordedsessions</string>
+    <string name="PENDING_RECORDSHEETS">pendingrecordsheets</string>
+    <string name="RECORDSHEETS">recordsheets</string>
+    <string name="SCHEDULE">schedule</string>
+    <string name="MODULE">module</string>
+    <string name="HOURS">hours</string>
+    <string name="COMMENT">comment</string>
+    <string name="USERNAME">username</string>
+    <string name="CONTACTS">contacts</string>
+    <string name="FIRST_NAME">firstName</string>
+    <string name="LAST_NAME">lastName</string>
+    <string name="GRADE">grade</string>
+    <string name="STUDENTS">students</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_session">SessionActivity</string>
+    <string-array name="hourArray">
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="weekDayTimeArray">
+        <item>14:00</item>
+        <item>14:30</item>
+        <item>15:00</item>
+        <item>15:30</item>
+        <item>16:00</item>
+        <item>16:30</item>
+        <item>17:00</item>
+        <item>17:30</item>
+    </string-array>
+
+    <string name="title_activity_my_profile">MyProfileActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_record_sheet_dialog">RecordSheetDialog</string>
+    <string name="title_activity_qr">QRActivity</string>
+</resources>

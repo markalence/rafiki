@@ -1,0 +1,48 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="drawerArrowStyle">@style/DrawerIcon</item>
+    </style>
+
+    <style name="MS" parent="Theme.AppCompat.NoActionBar" />
+
+    <style name="Base.Widget.AppCompat.DrawerArrowToggle." parent="Base.ThemeOverlay.AppCompat.Dark" />
+
+    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="DialogAnimation" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowShowAnimation">@anim/from_left</item>
+    </style>
+
+    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="NoTitleDialog" parent="@style/Theme.AppCompat.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CustomDialogTheme" parent="android:Theme.DeviceDefault.Light.Dialog" />
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+</resources>

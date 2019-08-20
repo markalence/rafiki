@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "627021057470",
+    "firebase_url": "https://rafiki-539a7.firebaseio.com",
+    "project_id": "rafiki-539a7",
+    "storage_bucket": "rafiki-539a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627021057470:android:2b1cbc596a536766",
+        "android_client_info": {
+          "package_name": "com.example.mark.ms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627021057470-tedtjbhv6i8evtof8gvr4mham6f6vog7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL4swC2-k4Ic3njbMicXZSB3zplJnOxRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627021057470-tedtjbhv6i8evtof8gvr4mham6f6vog7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
