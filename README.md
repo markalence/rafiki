@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/markalence/idek.svg?branch=master)](https://travis-ci.org/markalence/idek)
-
+[![Build Status](https://travis-ci.org/markalence/rafiki.svg?branch=master)](https://travis-ci.org/markalence/rafiki)
 # Welcome to the Rafiki Wiki!
 
 ## Project members:
