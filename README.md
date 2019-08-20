@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/markalence/rafiki.svg?branch=master)](https://travis-ci.org/markalence/rafiki)
 # Welcome to the Rafiki Wiki!
 
 ## Project members:
@@ -75,7 +74,14 @@ Once present at the home screen, the user will be presented with previously post
 
 If the user chooses question services then they will provided with the related text fields to do so. Similarly if QR code services is chosen, the camera application will open and the user will be able to scan QR codes. Lastly, the user can view upcoming events in the event services activity.
 
+### Logical view: Class diagram
 
+The logical view of the system is concerned with the overall functionality that is provided to the user from a class perspective.
+
+![Class diagram (1)](https://user-images.githubusercontent.com/47977629/63343192-a9ca0d00-c34d-11e9-95c7-1dc820deae68.png)
+
+
+As observed in the diagram above, the student class is at the core of functionality.The statistic class exists solely due to the existence of the student class. However, the event, question, location and QR code elements are independent of the student class and exist one their own. The event, questions, location and QR code classes all have some form of relation to the statistics class due to the fact that a student attending course events and posting and answering questions will reflect on their profile.
 
 
 
