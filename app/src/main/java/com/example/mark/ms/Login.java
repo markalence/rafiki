@@ -80,6 +80,7 @@ public class Login extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
         String userData = mSharedPreferences.getString("userData", "empty");
+        System.out.println(userData);
 
         if (userData.equals("empty")) {
             getLoginInfo();
@@ -88,7 +89,6 @@ public class Login extends AppCompatActivity {
 
             try {
                 JSONObject j = new JSONObject(userData);
-                System.out.println(j);
                 studentNum = j.getString("studentNumber");
                 password = j.getString("password");
                 getData();

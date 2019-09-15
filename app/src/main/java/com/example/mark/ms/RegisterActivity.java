@@ -1,7 +1,9 @@
 package com.example.mark.ms;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText confirmPassword;
     private Button registerButton;
     private FirebaseFirestore db;
+    SharedPreferences.Editor mEditor;
+    SharedPreferences mSharedPreferences;
 
 
     @Override
@@ -41,6 +47,9 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.regPassword);
         confirmPassword = findViewById(R.id.regConfirmPassword);
         registerButton = findViewById(R.id.regButton);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
+
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +80,17 @@ public class RegisterActivity extends AppCompatActivity {
         if (studentNumber.getText().toString().length() == 7) {
             if (password.getText().toString().equals(confirmPassword.getText().toString())) {
                 if (password.getText().toString().length() >= 6) {
+                    JSONObject j = new JSONObject();
+                    try {
+                        j.put("studentNumber",studentNumber.getText().toString());
+                        j.put("password",password.getText().toString());
+                        mEditor.putString("userData", j.toString());
+                        mEditor.commit();
+                        Intent intent = new Intent(RegisterActivity.this,Login.class);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     return true;
                 } else {
                     Toast.makeText(this.getBaseContext(), "Password needs to be greater than six characters", Toast.LENGTH_SHORT);

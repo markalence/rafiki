@@ -52,11 +52,6 @@
         <activity
             android:name=".SessionActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".MyProfile" />
-        <activity
-            android:name=".MyProfileActivity"
-            android:label="@string/title_activity_my_profile"
-            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

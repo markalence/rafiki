@@ -143,9 +143,7 @@ public class MainActivity extends AppCompatActivity
             BookingRecorder bookingRecorder = new BookingRecorder(this, this.getLayoutInflater());
             bookingRecorder.numberPickerInit();
         } else if (id == R.id.student_profile) {
-            Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.contact) {
+        } else if(id == R.id.contact) {
 
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
