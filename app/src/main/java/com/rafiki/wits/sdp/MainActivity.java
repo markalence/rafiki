@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     public void setRecyclerView() {
         recyclerView = findViewById(R.id.recordSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rsa = new RecordSheetAdapter(this, Login.recordSheet);
+        rsa = new RecordSheetAdapter(this, LoginActivity.recordSheet);
         recyclerView.setAdapter(rsa);
         System.out.println((recyclerView.getAdapter().getItemCount()));
     }
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         nameView = navigationView.getHeaderView(0).findViewById(R.id.name);
 //        gradeView = navigationView.getHeaderView(0).findViewById(R.id.grade);
-        nameView.setText(Login.studentNum);
+        nameView.setText(LoginActivity.studentNum);
         Picasso.get().load(R.mipmap.header_background).into(header);
     }
 

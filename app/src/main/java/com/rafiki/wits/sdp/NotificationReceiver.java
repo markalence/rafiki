@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,8 +11,8 @@ import android.os.Bundle;
 
 import androidx.core.app.RemoteInput;
 
-import com.example.mark.ms.Service.FirebaseIDService;
-import com.example.mark.ms.Service.RecordSheetDialog;
+import com.rafiki.wits.sdp.Service.FirebaseIDService;
+import com.rafiki.wits.sdp.Service.RecordSheetDialog;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;

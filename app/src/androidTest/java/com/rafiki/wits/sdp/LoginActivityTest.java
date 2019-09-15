@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.widget.ProgressBar;
 
@@ -16,11 +16,11 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 
-public class LoginTest {
+public class LoginActivityTest {
 
     @Rule
-    public ActivityTestRule<Login> mActivityTestRule = new ActivityTestRule<Login>(Login.class, true, true);
-    private Login mActivity = null;
+    public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<LoginActivity>(LoginActivity.class, true, true);
+    private LoginActivity mActivity = null;
 
     @Before
     public void setUp() throws Exception {

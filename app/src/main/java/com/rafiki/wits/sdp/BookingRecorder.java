@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -64,7 +64,7 @@ public class BookingRecorder{
                 if (Build.VERSION.SDK_INT <= 20) {
                     recordDialog.dismiss();
                 }
-                docData.put("studentNumber", Login.studentNum);
+                docData.put("studentNumber", LoginActivity.studentNum);
                 docData.put("question",et.getText().toString());
                 firestore.collection("pendingquestions").add(docData);
                 recordDialog.dismiss();

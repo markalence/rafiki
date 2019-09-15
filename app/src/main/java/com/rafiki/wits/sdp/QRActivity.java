@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;

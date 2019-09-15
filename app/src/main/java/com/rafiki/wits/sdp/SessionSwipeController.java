@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -123,7 +123,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
 
-        sessionCopy = (HashMap<String, Object>) Login.upcomingSessions.get(viewHolder.getAdapterPosition()).clone();
+        sessionCopy = (HashMap<String, Object>) LoginActivity.upcomingSessions.get(viewHolder.getAdapterPosition()).clone();
         sessionCopy.remove("id");
 
         if (direction == RIGHT) {
@@ -141,7 +141,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 @Override
                 public void onClick(View view) {
                     if (clickable) {
-                        Login.upcomingSessions.add(copyPosition, copyMap);
+                        LoginActivity.upcomingSessions.add(copyPosition, copyMap);
                         sessionAdapter.notifyItemInserted(copyPosition);
                         clickable = false;
                         firestore.collection("schedule")
@@ -150,7 +150,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                 if (task.isSuccessful()) {
 
-                                    Login.upcomingSessions.get(copyPosition).put("id", task.getResult().getId());
+                                    LoginActivity.upcomingSessions.get(copyPosition).put("id", task.getResult().getId());
 
                                 } else {
                                     Toast.makeText(sessionAdapter.mContext, "Couldn't re-add session at this time", Toast.LENGTH_SHORT).show();
@@ -199,10 +199,10 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             Spinner hourSpinner = dialogView.findViewById(R.id.hourSpinner);
 
             final int index = viewHolder.getAdapterPosition();
-            final Timestamp initialTimestamp = (Timestamp) Login.upcomingSessions.get(index).get("date");
+            final Timestamp initialTimestamp = (Timestamp) LoginActivity.upcomingSessions.get(index).get("date");
             Date initialDate = initialTimestamp.toDate();
 
-            final HashMap<String,Object> copyDay = (HashMap<String, Object>) Login.upcomingSessions.get(index).clone();
+            final HashMap<String,Object> copyDay = (HashMap<String, Object>) LoginActivity.upcomingSessions.get(index).clone();
 
             String initialDateString = sdf.format(initialDate);
             final String initialDay = initialDateString.split(":")[0];
@@ -234,7 +234,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                     Date newDate = sdf.parse(newDateString, parse);
                     Timestamp newTimestamp = new Timestamp(newDate);
 
-                    Login.upcomingSessions.get(index).put("date", newTimestamp);
+                    LoginActivity.upcomingSessions.get(index).put("date", newTimestamp);
 
                 }
             });
@@ -259,10 +259,10 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    Login.upcomingSessions.get(index).clear();
-                    Login.upcomingSessions.get(index).putAll(copyDay);
+                    LoginActivity.upcomingSessions.get(index).clear();
+                    LoginActivity.upcomingSessions.get(index).putAll(copyDay);
                     firestore.collection(r.getString(R.string.SCHEDULE))
-                            .whereEqualTo(r.getString(R.string.USERNAME), Login.studentNum)
+                            .whereEqualTo(r.getString(R.string.USERNAME), LoginActivity.studentNum)
                             .whereEqualTo(r.getString(R.string.DATE), initialTimestamp)
                             .get(Source.SERVER)
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -272,7 +272,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                                         if (i == 0) {
                                             firestore.collection(r.getString(R.string.SCHEDULE))
                                                     .document(task.getResult().getDocuments().get(0).getId())
-                                                    .update(Login.upcomingSessions.get(index));
+                                                    .update(LoginActivity.upcomingSessions.get(index));
                                         }
                                     }
                                 }
@@ -287,7 +287,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 public void onClick(View v) {
                     dialog.dismiss();
                     SessionActivity.sessionAdapter.notifyItemChanged(index);
-                    Login.upcomingSessions.get(index).put(r.getString(R.string.HOURS), sessionCopy.get(r.getString(R.string.HOURS)));
+                    LoginActivity.upcomingSessions.get(index).put(r.getString(R.string.HOURS), sessionCopy.get(r.getString(R.string.HOURS)));
 
                 }
             });

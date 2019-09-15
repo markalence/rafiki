@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     public static String studentNum;
     public static String firstName;
@@ -108,7 +107,7 @@ public class Login extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -123,7 +122,7 @@ public class Login extends AppCompatActivity {
                 password = passwordText.getText().toString();
                 setContentView(R.layout.login_loading);
 
-                firebaseAuth.signInWithEmailAndPassword(studentNum + "@students.wits.ac.za", password).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                firebaseAuth.signInWithEmailAndPassword(studentNum + "@students.wits.ac.za", password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -139,7 +138,7 @@ public class Login extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Intent intent = new Intent(Login.this,MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(intent);
                         }
                         if (!task.isSuccessful()) {
@@ -175,7 +174,7 @@ public class Login extends AppCompatActivity {
                             recordSheetLoaded = true;
                             if (sessionsLoaded && recordSheetLoaded && daysLoaded) {
                                 finish();
-                                Intent intent = new Intent(Login.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
 
                             }
@@ -201,12 +200,12 @@ public class Login extends AppCompatActivity {
                     }
                     sessionsLoaded = true;
 
-                        firebaseAuth.signInWithEmailAndPassword(studentNum + "@students.wits.ac.za", password).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                        firebaseAuth.signInWithEmailAndPassword(studentNum + "@students.wits.ac.za", password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    Intent intent = new Intent(Login.this,MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
                                 }
                                 if (!task.isSuccessful()) {
@@ -216,7 +215,7 @@ public class Login extends AppCompatActivity {
                         });
 
 
-                        Intent intent = new Intent(Login.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         finish();
                         startActivity(intent);
                 } else {

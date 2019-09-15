@@ -1,4 +1,4 @@
-package com.example.mark.ms.Service;
+package com.rafiki.wits.sdp.Service;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -15,8 +15,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import android.util.Log;
 
-import com.example.mark.ms.NotificationReceiver;
-import com.example.mark.ms.R;
+import com.rafiki.wits.sdp.NotificationReceiver;
+import com.rafiki.wits.sdp.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;

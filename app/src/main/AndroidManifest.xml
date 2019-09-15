@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.mark.ms">
+    package="com.rafiki.wits.sdp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -20,24 +20,24 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
         <activity
-            android:name=".QRActivity"
+            android:name="com.rafiki.wits.sdp.QRActivity"
             android:label="QRActivity"
             ></activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name="com.rafiki.wits.sdp.RegisterActivity" />
 
-        <service android:name=".Service.FirebaseIDService">
+        <service android:name="com.rafiki.wits.sdp.Service.FirebaseIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <receiver
-            android:name=".NotificationReceiver"
+            android:name="com.rafiki.wits.sdp.NotificationReceiver"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name=".Login"
+            android:name="com.rafiki.wits.sdp.LoginActivity"
             android:theme="@style/MS">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,18 +46,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.rafiki.wits.sdp.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".SessionActivity"
+            android:name="com.rafiki.wits.sdp.SessionActivity"
             android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher_round" /> <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
         <activity
-            android:name=".Service.RecordSheetDialog"
+            android:name="com.rafiki.wits.sdp.Service.RecordSheetDialog"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_record_sheet_dialog"
             android:launchMode="singleInstance"

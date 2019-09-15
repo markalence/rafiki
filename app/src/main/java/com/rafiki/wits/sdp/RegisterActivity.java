@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                         j.put("password",password.getText().toString());
                         mEditor.putString("userData", j.toString());
                         mEditor.commit();
-                        Intent intent = new Intent(RegisterActivity.this,Login.class);
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                         startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();

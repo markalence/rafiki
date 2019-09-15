@@ -1,4 +1,4 @@
-package com.example.mark.ms.Service;
+package com.rafiki.wits.sdp.Service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 
-import com.example.mark.ms.MainActivity;
-import com.example.mark.ms.R;
+import com.rafiki.wits.sdp.MainActivity;
+import com.rafiki.wits.sdp.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 

@@ -1,4 +1,4 @@
-package com.example.mark.ms;
+package com.rafiki.wits.sdp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -66,8 +66,8 @@ public class SessionActivity extends AppCompatActivity {
     public void recyclerViewInit() {
         recyclerView = findViewById(R.id.sessionSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        sessionAdapter = new SessionAdapter(this, Login.upcomingSessions);
-        System.out.println(Login.upcomingSessions);
+        sessionAdapter = new SessionAdapter(this, LoginActivity.upcomingSessions);
+        System.out.println(LoginActivity.upcomingSessions);
         recyclerView.setAdapter(sessionAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
         itemTouchHelper.attachToRecyclerView(recyclerView);
