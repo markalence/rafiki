@@ -40,7 +40,7 @@ import static android.renderscript.ScriptIntrinsicBLAS.LEFT;
 import static android.view.Gravity.RIGHT;
 
 
-public class SessionSwipeController extends ItemTouchHelper.Callback {
+public class TutSwipeController extends ItemTouchHelper.Callback {
 
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private boolean clickable;
@@ -53,7 +53,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
     SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd:kk:mm");
 
 
-    SessionSwipeController(Context context, LayoutInflater inflater) {
+    TutSwipeController(Context context, LayoutInflater inflater) {
         mContext = context;
         if(android.os.Build.VERSION.SDK_INT <= 20){
             deleteIcon = ContextCompat.getDrawable(mContext,R.drawable.ic_session_delete_old);
@@ -123,26 +123,26 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
 
-        sessionCopy = (HashMap<String, Object>) LoginActivity.upcomingSessions.get(viewHolder.getAdapterPosition()).clone();
+        sessionCopy = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(viewHolder.getAdapterPosition()).clone();
         sessionCopy.remove("id");
 
         if (direction == RIGHT) {
 
             clickable = true;
 
-            final SessionAdapter sessionAdapter = (SessionAdapter) SessionActivity.recyclerView.getAdapter();
+            final TutAdapter tutAdapter = (TutAdapter) TutActivity.recyclerView.getAdapter();
             final int copyPosition = viewHolder.getAdapterPosition();
-            final HashMap<String, Object> copyMap = sessionAdapter.mDataset.get(copyPosition);
+            final HashMap<String, Object> copyMap = tutAdapter.mDataset.get(copyPosition);
             copyMap.remove("id");
 
             final Snackbar snackbar = Snackbar
-                    .make(SessionActivity.sessionView, "Session canceled.", Snackbar.LENGTH_LONG);
+                    .make(TutActivity.sessionView, "Session canceled.", Snackbar.LENGTH_LONG);
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (clickable) {
-                        LoginActivity.upcomingSessions.add(copyPosition, copyMap);
-                        sessionAdapter.notifyItemInserted(copyPosition);
+                        LoginActivity.upcomingTuts.add(copyPosition, copyMap);
+                        tutAdapter.notifyItemInserted(copyPosition);
                         clickable = false;
                         firestore.collection("schedule")
                                 .add(copyMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -150,10 +150,10 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                 if (task.isSuccessful()) {
 
-                                    LoginActivity.upcomingSessions.get(copyPosition).put("id", task.getResult().getId());
+                                    LoginActivity.upcomingTuts.get(copyPosition).put("id", task.getResult().getId());
 
                                 } else {
-                                    Toast.makeText(sessionAdapter.mContext, "Couldn't re-add session at this time", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(tutAdapter.mContext, "Couldn't re-add session at this time", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -164,8 +164,8 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             snackbar.setActionTextColor(Color.rgb(25, 172, 172));
 
             if (viewHolder.getAdapterPosition() != -1) {
-                ((SessionAdapter) SessionActivity.recyclerView.getAdapter()).mDataset.remove(copyPosition);
-                ((SessionAdapter) SessionActivity.recyclerView.getAdapter()).notifyItemRemoved(copyPosition);
+                ((TutAdapter) TutActivity.recyclerView.getAdapter()).mDataset.remove(copyPosition);
+                ((TutAdapter) TutActivity.recyclerView.getAdapter()).notifyItemRemoved(copyPosition);
                 Query query = firestore.collection("schedule")
                         .whereEqualTo("studentNum", copyMap.get("studentNum"))
                         .whereEqualTo("date", copyMap.get("date"));
@@ -199,10 +199,10 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             Spinner hourSpinner = dialogView.findViewById(R.id.hourSpinner);
 
             final int index = viewHolder.getAdapterPosition();
-            final Timestamp initialTimestamp = (Timestamp) LoginActivity.upcomingSessions.get(index).get("date");
+            final Timestamp initialTimestamp = (Timestamp) LoginActivity.upcomingTuts.get(index).get("date");
             Date initialDate = initialTimestamp.toDate();
 
-            final HashMap<String,Object> copyDay = (HashMap<String, Object>) LoginActivity.upcomingSessions.get(index).clone();
+            final HashMap<String,Object> copyDay = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(index).clone();
 
             String initialDateString = sdf.format(initialDate);
             final String initialDay = initialDateString.split(":")[0];
@@ -234,7 +234,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                     Date newDate = sdf.parse(newDateString, parse);
                     Timestamp newTimestamp = new Timestamp(newDate);
 
-                    LoginActivity.upcomingSessions.get(index).put("date", newTimestamp);
+                    LoginActivity.upcomingTuts.get(index).put("date", newTimestamp);
 
                 }
             });
@@ -259,8 +259,8 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    LoginActivity.upcomingSessions.get(index).clear();
-                    LoginActivity.upcomingSessions.get(index).putAll(copyDay);
+                    LoginActivity.upcomingTuts.get(index).clear();
+                    LoginActivity.upcomingTuts.get(index).putAll(copyDay);
                     firestore.collection(r.getString(R.string.SCHEDULE))
                             .whereEqualTo(r.getString(R.string.USERNAME), LoginActivity.studentNum)
                             .whereEqualTo(r.getString(R.string.DATE), initialTimestamp)
@@ -272,12 +272,12 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                                         if (i == 0) {
                                             firestore.collection(r.getString(R.string.SCHEDULE))
                                                     .document(task.getResult().getDocuments().get(0).getId())
-                                                    .update(LoginActivity.upcomingSessions.get(index));
+                                                    .update(LoginActivity.upcomingTuts.get(index));
                                         }
                                     }
                                 }
                             });
-                    SessionActivity.sessionAdapter.notifyItemChanged(index);
+                    TutActivity.tutAdapter.notifyItemChanged(index);
                 }
             });
 
@@ -286,8 +286,8 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    SessionActivity.sessionAdapter.notifyItemChanged(index);
-                    LoginActivity.upcomingSessions.get(index).put(r.getString(R.string.HOURS), sessionCopy.get(r.getString(R.string.HOURS)));
+                    TutActivity.tutAdapter.notifyItemChanged(index);
+                    LoginActivity.upcomingTuts.get(index).put(r.getString(R.string.HOURS), sessionCopy.get(r.getString(R.string.HOURS)));
 
                 }
             });

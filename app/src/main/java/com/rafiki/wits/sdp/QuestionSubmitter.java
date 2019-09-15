@@ -18,32 +18,20 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 
-public class BookingRecorder{
+public class QuestionSubmitter {
 
 
-    private int year, month, day;
     private Context mContext;
     private LayoutInflater mInflater;
-    private DatePickerDialog mDatePickerDialog;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private AlertDialog recordDialog;
-    private View pickerView;
-    private Resources r;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yy/mm/dd");
 
 
     private HashMap<String, Object> docData = new HashMap<>();
 
-    BookingRecorder(Context context, LayoutInflater inflater) {
-
-        Calendar calendar = Calendar.getInstance();
+    QuestionSubmitter(Context context, LayoutInflater inflater) {
         mInflater = inflater;
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
         mContext = context;
-        r = mContext.getResources();
-
     }
 
 

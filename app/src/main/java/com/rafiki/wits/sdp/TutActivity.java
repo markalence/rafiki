@@ -18,23 +18,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SessionActivity extends AppCompatActivity {
+public class TutActivity extends AppCompatActivity {
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     static ArrayList<HashMap<String, Object>> sessionItems = new ArrayList<>();
     static RecyclerView recyclerView;
-    static SessionAdapter sessionAdapter;
+    static TutAdapter tutAdapter;
     static ImageButton deleteButton;
     static Toolbar toolbar;
     static TextView toolbarTitle;
-    SessionSwipeController swipeController;
+    TutSwipeController swipeController;
     static View sessionView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
-        swipeController =  new SessionSwipeController(this,getLayoutInflater());
+        swipeController =  new TutSwipeController(this,getLayoutInflater());
         sessionItems.clear();
         sessionView = findViewById(android.R.id.content);
         deleteButton = findViewById(R.id.deleteButton);
@@ -57,7 +57,7 @@ public class SessionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(SessionActivity.this, MainActivity.class);
+            Intent intent = new Intent(TutActivity.this, MainActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -66,9 +66,9 @@ public class SessionActivity extends AppCompatActivity {
     public void recyclerViewInit() {
         recyclerView = findViewById(R.id.sessionSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        sessionAdapter = new SessionAdapter(this, LoginActivity.upcomingSessions);
-        System.out.println(LoginActivity.upcomingSessions);
-        recyclerView.setAdapter(sessionAdapter);
+        tutAdapter = new TutAdapter(this, LoginActivity.upcomingTuts);
+        System.out.println(LoginActivity.upcomingTuts);
+        recyclerView.setAdapter(tutAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }

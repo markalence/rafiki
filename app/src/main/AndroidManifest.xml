@@ -50,7 +50,7 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.rafiki.wits.sdp.SessionActivity"
+            android:name="com.rafiki.wits.sdp.TutActivity"
             android:theme="@style/AppTheme" />
 
         <meta-data

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
     private TextView nameView;
     private TextView gradeView;
     private boolean exit = false;
-    private RecordSheetAdapter rsa;
+    private InteractionSheetAdapter rsa;
     private RecyclerView recyclerView;
 
     @Override
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     public void setRecyclerView() {
         recyclerView = findViewById(R.id.recordSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rsa = new RecordSheetAdapter(this, LoginActivity.recordSheet);
+        rsa = new InteractionSheetAdapter(this, LoginActivity.recordSheet);
         recyclerView.setAdapter(rsa);
         System.out.println((recyclerView.getAdapter().getItemCount()));
     }
@@ -133,15 +133,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.sessions) {
-            Intent intent = new Intent(MainActivity.this, SessionActivity.class);
+            Intent intent = new Intent(MainActivity.this, TutActivity.class);
             startActivity(intent);
         } else if (id == R.id.book) {
             Intent intent = new Intent(MainActivity.this, QRActivity.class);
             startActivity(intent);
             //startAnimationFromBackgroundThread();
         } else if (id == R.id.record) {
-            BookingRecorder bookingRecorder = new BookingRecorder(this, this.getLayoutInflater());
-            bookingRecorder.numberPickerInit();
+            QuestionSubmitter questionSubmitter = new QuestionSubmitter(this, this.getLayoutInflater());
+            questionSubmitter.numberPickerInit();
         } else if (id == R.id.student_profile) {
         } else if(id == R.id.contact) {
 

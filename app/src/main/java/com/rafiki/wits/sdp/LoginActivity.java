@@ -42,9 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     public static String password;
     public static String grade;
     public static ArrayList<HashMap<String, String>> userDays;
-    public static ArrayList<HashMap<String, String>> userContacts;
     public static ArrayList<HashMap<String, Object>> recordSheet;
-    public static ArrayList<HashMap<String, Object>> upcomingSessions;
+    public static ArrayList<HashMap<String, Object>> upcomingTuts;
     private boolean sessionsLoaded = false;
     private boolean recordSheetLoaded = false;
     private boolean daysLoaded = false;
@@ -153,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
     public void getData() {
 
         recordSheet = new ArrayList<>();
-        upcomingSessions = new ArrayList<>();
+        upcomingTuts = new ArrayList<>();
         userDays = new ArrayList<>();
 
         db.collection(r.getString(R.string.STUDENTS))
@@ -196,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     for (DocumentSnapshot doc : task.getResult()) {
                         HashMap<String, Object> info = (HashMap<String, Object>) doc.getData();
-                        upcomingSessions.add(info);
+                        upcomingTuts.add(info);
                     }
                     sessionsLoaded = true;
 

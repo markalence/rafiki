@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHolder> {
+public class TutAdapter extends RecyclerView.Adapter<TutAdapter.ViewHolder> {
 
     ArrayList<HashMap<String, Object>> mDataset;
     Context mContext;
@@ -47,7 +47,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     boolean clickable;
 
 
-    public SessionAdapter(Context context, ArrayList<HashMap<String, Object>> myDataset) {
+    public TutAdapter(Context context, ArrayList<HashMap<String, Object>> myDataset) {
         mDataset = myDataset;
         mContext = context;
         selectedItems = new ArrayList<>();
@@ -59,16 +59,16 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
 
     @NonNull
     @Override
-    public SessionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TutAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.session_item, parent, false);
-        SessionAdapter.ViewHolder vh = new SessionAdapter.ViewHolder(v);
+        TutAdapter.ViewHolder vh = new TutAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SessionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final TutAdapter.ViewHolder holder, int position) {
 
         holder.sessionLayout.setBackgroundResource(R.drawable.bottomline);
         SimpleDateFormat hourFormat = new SimpleDateFormat(HOUR_FORMAT);
@@ -152,10 +152,10 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
         holder.sessionLayout.setBackgroundColor(Color.rgb(200, 200, 200));
         selectedItems.add(mDataset.get(position));
         holder.side = "back";
-        SessionActivity.toolbar.setBackgroundColor(Color.rgb(190, 190, 190));
-        SessionActivity.toolbarTitle.setVisibility(View.INVISIBLE);
-//        SessionActivity.deleteButton.setVisibility(View.VISIBLE);
-//        SessionActivity.deleteButton.setFocusable(true);
+        TutActivity.toolbar.setBackgroundColor(Color.rgb(190, 190, 190));
+        TutActivity.toolbarTitle.setVisibility(View.INVISIBLE);
+//        TutActivity.deleteButton.setVisibility(View.VISIBLE);
+//        TutActivity.deleteButton.setFocusable(true);
 
 
     }
@@ -179,9 +179,9 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
             selectedItems.remove(mDataset.get(position));
         }
         if (selectedItems.isEmpty()) {
-            SessionActivity.toolbarTitle.setVisibility(View.VISIBLE);
-            SessionActivity.toolbar.setBackgroundColor(Color.rgb(25, 205, 205));
-            SessionActivity.deleteButton.setVisibility(View.INVISIBLE);
+            TutActivity.toolbarTitle.setVisibility(View.VISIBLE);
+            TutActivity.toolbar.setBackgroundColor(Color.rgb(25, 205, 205));
+            TutActivity.deleteButton.setVisibility(View.INVISIBLE);
         }
     }
 }
