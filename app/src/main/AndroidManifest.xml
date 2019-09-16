@@ -59,7 +59,6 @@
         <activity
             android:name="com.rafiki.wits.sdp.Service.RecordSheetDialog"
             android:excludeFromRecents="true"
-            android:label="@string/title_activity_record_sheet_dialog"
             android:launchMode="singleInstance"
             android:theme="@style/NoTitleDialog"
             tools:ignore="InnerclassSeparator" />

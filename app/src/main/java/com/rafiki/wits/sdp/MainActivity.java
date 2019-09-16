@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
     private TextView nameView;
     private TextView gradeView;
     private boolean exit = false;
-    private InteractionSheetAdapter rsa;
+    private InteractionListAdapter rsa;
     private RecyclerView recyclerView;
 
     @Override
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     public void setRecyclerView() {
         recyclerView = findViewById(R.id.recordSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rsa = new InteractionSheetAdapter(this, LoginActivity.recordSheet);
+        rsa = new InteractionListAdapter(this, LoginActivity.interactionList);
         recyclerView.setAdapter(rsa);
         System.out.println((recyclerView.getAdapter().getItemCount()));
     }

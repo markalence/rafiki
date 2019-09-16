@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class InteractionSheetAdapter extends RecyclerView.Adapter<InteractionSheetAdapter.ViewHolder> {
+public class InteractionListAdapter extends RecyclerView.Adapter<InteractionListAdapter.ViewHolder> {
 
     private ArrayList<HashMap<String, Object>> mDataset;
     private Context mContext;
@@ -25,23 +25,23 @@ public class InteractionSheetAdapter extends RecyclerView.Adapter<InteractionShe
     private SimpleDateFormat sfd = new SimpleDateFormat(dateFormat);
     Resources r;
 
-    public InteractionSheetAdapter(Context context, ArrayList<HashMap<String, Object>> myDataset) {
+    public InteractionListAdapter(Context context, ArrayList<HashMap<String, Object>> myDataset) {
         this.mDataset = myDataset;
         this.mContext = context;
         r = this.mContext.getResources();
     }
 
     @Override
-    public InteractionSheetAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                 int viewType) {
+    public InteractionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.record_sheet_item_fancy, parent, false);
-        InteractionSheetAdapter.ViewHolder vh = new InteractionSheetAdapter.ViewHolder(v);
+        InteractionListAdapter.ViewHolder vh = new InteractionListAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(InteractionSheetAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(InteractionListAdapter.ViewHolder holder, int position) {
 
         holder.setItem(mDataset.get(holder.getAdapterPosition()));
     }

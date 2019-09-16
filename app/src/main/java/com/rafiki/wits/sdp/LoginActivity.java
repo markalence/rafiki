@@ -37,16 +37,11 @@ import java.util.HashMap;
 public class LoginActivity extends AppCompatActivity {
 
     public static String studentNum;
-    public static String firstName;
-    public static String lastName;
     public static String password;
-    public static String grade;
-    public static ArrayList<HashMap<String, String>> userDays;
-    public static ArrayList<HashMap<String, Object>> recordSheet;
+    public static ArrayList<HashMap<String, Object>> interactionList;
     public static ArrayList<HashMap<String, Object>> upcomingTuts;
-    private boolean sessionsLoaded = false;
-    private boolean recordSheetLoaded = false;
-    private boolean daysLoaded = false;
+    private boolean tutsLoaded = false;
+    private boolean interactionListLoaded = false;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private Resources r;
@@ -59,10 +54,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        recordSheet = new ArrayList<>();
+        interactionList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setTimestampsInSnapshotsEnabled(true)
                 .setPersistenceEnabled(false)
                 .build();
         db.setFirestoreSettings(settings);
@@ -77,18 +71,18 @@ public class LoginActivity extends AppCompatActivity {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
-        String userData = mSharedPreferences.getString("userData", "empty");
+        String userData = mSharedPreferences.getString(r.getString(R.string.USER_DATA), r.getString(R.string.EMPTY));
         System.out.println(userData);
 
-        if (userData.equals("empty")) {
+        if (userData.equals(r.getString(R.string.EMPTY))) {
             getLoginInfo();
 
         } else {
 
             try {
                 JSONObject j = new JSONObject(userData);
-                studentNum = j.getString("studentNumber");
-                password = j.getString("password");
+                studentNum = j.getString(r.getString(R.string.STUDENT_NUMBER));
+                password = j.getString(r.getString(R.string.PASSWORD));
                 getData();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -99,18 +93,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void getLoginInfo() {
-
         setContentView(R.layout.activity_login);
         Button button = (Button) findViewById(R.id.loginbutton);
         Button registerButton = findViewById(R.id.register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,43 +113,42 @@ public class LoginActivity extends AppCompatActivity {
                 password = passwordText.getText().toString();
                 setContentView(R.layout.login_loading);
 
-                firebaseAuth.signInWithEmailAndPassword(studentNum + "@students.wits.ac.za", password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            JSONObject j = new JSONObject();
-                            try {
-                                j.put("studentNumber", studentNum);
-                                j.put("password", password);
-                                j.put(r.getString(R.string.GRADE), grade);
-                                mEditor.putString("userData", j.toString());
-                                mEditor.commit();
+                firebaseAuth.signInWithEmailAndPassword(studentNum + r.getString(R.string.EMAIL_POSTFIX), password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    JSONObject j = new JSONObject();
+                                    try {
+                                        j.put(r.getString(R.string.STUDENT_NUMBER), studentNum);
+                                        j.put(r.getString(R.string.PASSWORD), password);
+                                        mEditor.putString(r.getString(R.string.USER_DATA), j.toString());
+                                        mEditor.commit();
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(getBaseContext(), r.getString(R.string.INVALID_LOGIN), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }
-                        if (!task.isSuccessful()) {
-                            System.out.println("Invalid login name or password");
-                        }
-                    }
-                });
+                        });
             }
         });
     }
 
     public void getData() {
 
-        recordSheet = new ArrayList<>();
+        interactionList = new ArrayList<>();
         upcomingTuts = new ArrayList<>();
-        userDays = new ArrayList<>();
 
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
-                .update("deviceToken",mSharedPreferences.getString("deviceToken",null));
+                .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
 
         db.collection(r.getString(R.string.RECORDSHEETS))
                 .whereEqualTo(r.getString(R.string.USERNAME), studentNum)
@@ -168,25 +159,24 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot doc : task.getResult()) {
-                                recordSheet.add((HashMap<String, Object>) doc.getData());
+                                interactionList.add((HashMap<String, Object>) doc.getData());
                             }
-                            recordSheetLoaded = true;
-                            if (sessionsLoaded && recordSheetLoaded && daysLoaded) {
+                            interactionListLoaded = true;
+                            if (tutsLoaded && interactionListLoaded) {
                                 finish();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
 
                             }
                         } else {
-                            Log.d("BAD", task.getException().toString());
-                            Toast.makeText(getBaseContext(), "Couldn't connect", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), r.getString(R.string.NETWORK_ERROR), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-        db.collection("courses")
+        db.collection(r.getString(R.string.COURSES))
                 .document("coms3005")
-                .collection("tutorials")
+                .collection(r.getString(R.string.TUTORIALS))
                 .orderBy(r.getString(R.string.DATE), Query.Direction.ASCENDING)
                 .get(Source.SERVER).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -197,28 +187,27 @@ public class LoginActivity extends AppCompatActivity {
                         HashMap<String, Object> info = (HashMap<String, Object>) doc.getData();
                         upcomingTuts.add(info);
                     }
-                    sessionsLoaded = true;
+                    tutsLoaded = true;
 
-                        firebaseAuth.signInWithEmailAndPassword(studentNum + "@students.wits.ac.za", password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
-                                }
-                                if (!task.isSuccessful()) {
-                                    System.out.println("Invalid login name or password");
-                                }
+                    firebaseAuth.signInWithEmailAndPassword(studentNum + r.getString(R.string.EMAIL_POSTFIX), password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
                             }
-                        });
+                            if (!task.isSuccessful()) {
+                                System.out.println(r.getString(R.string.INVALID_LOGIN));
+                            }
+                        }
+                    });
 
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        finish();
-                        startActivity(intent);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    finish();
+                    startActivity(intent);
                 } else {
-                    Toast.makeText(getBaseContext(), "Could not connect to database", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), r.getString(R.string.NETWORK_ERROR), Toast.LENGTH_SHORT).show();
                     System.out.println(task.getException());
                 }
             }

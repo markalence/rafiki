@@ -55,7 +55,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:entries="@array/weekDayTimeArray"
         android:theme="@style/AppTheme.Picker"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
         app:layout_constraintHorizontal_weight="0.5"
@@ -70,7 +69,6 @@
         android:layout_marginStart="8dp"
 
         android:layout_marginTop="8dp"
-        android:entries="@array/hourArray"
         android:theme="@style/AppTheme.Picker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
