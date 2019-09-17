@@ -11,6 +11,10 @@
     <string name="COURSES">courses</string>
     <string name="TUTORIALS">tutorials</string>
     <string name="DATE">date</string>
+    <string name="ANSWERED_QUESTIONS">answeredquestions</string>
+    <string name="QUESTION">question</string>
+    <string name="ANSWER">answer</string>
+    <string name="COURSE_CODE">courseCode</string>
     <string name="RECORDED_SESSIONS">recordedsessions</string>
     <string name="PENDING_RECORDSHEETS">pendingrecordsheets</string>
     <string name="RECORDSHEETS">recordsheets</string>

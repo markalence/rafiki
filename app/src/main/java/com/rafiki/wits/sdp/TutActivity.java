@@ -27,14 +27,12 @@ public class TutActivity extends AppCompatActivity {
     static ImageButton deleteButton;
     static Toolbar toolbar;
     static TextView toolbarTitle;
-    TutSwipeController swipeController;
     static View sessionView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
-        swipeController =  new TutSwipeController(this,getLayoutInflater());
         sessionItems.clear();
         sessionView = findViewById(android.R.id.content);
         deleteButton = findViewById(R.id.deleteButton);
@@ -69,8 +67,6 @@ public class TutActivity extends AppCompatActivity {
         tutAdapter = new TutAdapter(this, LoginActivity.upcomingTuts);
         System.out.println(LoginActivity.upcomingTuts);
         recyclerView.setAdapter(tutAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override

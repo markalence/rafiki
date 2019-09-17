@@ -61,24 +61,28 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         db.setFirestoreSettings(settings);
         firebaseAuth = FirebaseAuth.getInstance();
-
-
         r = getBaseContext().getResources();
         setContentView(R.layout.login_loading);
-        progressBar = findViewById(R.id.progress);
-        WanderingCubes wc = new WanderingCubes();
-        progressBar.setIndeterminateDrawable(wc);
+        progressBarInit();
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
         String userData = mSharedPreferences.getString(r.getString(R.string.USER_DATA), r.getString(R.string.EMPTY));
+        directUser(userData);
+
+    }
+
+    //returns false if userData is empty, false if not
+    public boolean directUser(String userData) {
+
         System.out.println(userData);
 
         if (userData.equals(r.getString(R.string.EMPTY))) {
             getLoginInfo();
+            return false;
+        }
 
-        } else {
-
+        else {
             try {
                 JSONObject j = new JSONObject(userData);
                 studentNum = j.getString(r.getString(R.string.STUDENT_NUMBER));
@@ -88,13 +92,22 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
                 getLoginInfo();
             }
+            return true;
         }
 
     }
 
+    public boolean progressBarInit() {
+        progressBar = findViewById(R.id.progress);
+        WanderingCubes wc = new WanderingCubes();
+        progressBar.setIndeterminateDrawable(wc);
+        return true;
+    }
+
+
     public void getLoginInfo() {
         setContentView(R.layout.activity_login);
-        Button button = (Button) findViewById(R.id.loginbutton);
+        Button button = findViewById(R.id.loginbutton);
         Button registerButton = findViewById(R.id.register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,8 +163,8 @@ public class LoginActivity extends AppCompatActivity {
                 .document(studentNum)
                 .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
 
-        db.collection(r.getString(R.string.RECORDSHEETS))
-                .whereEqualTo(r.getString(R.string.USERNAME), studentNum)
+        db.collection(r.getString(R.string.ANSWERED_QUESTIONS))
+                .whereEqualTo(r.getString(R.string.COURSE_CODE), "coms3005")
                 .orderBy(r.getString(R.string.DATE), Query.Direction.DESCENDING)
                 .get(Source.SERVER)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -161,6 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                             for (DocumentSnapshot doc : task.getResult()) {
                                 interactionList.add((HashMap<String, Object>) doc.getData());
                             }
+                            System.out.println(interactionList);
                             interactionListLoaded = true;
                             if (tutsLoaded && interactionListLoaded) {
                                 finish();
@@ -170,6 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } else {
                             Toast.makeText(getBaseContext(), r.getString(R.string.NETWORK_ERROR), Toast.LENGTH_SHORT).show();
+                            System.out.println(task.getException());
                         }
                     }
                 });

@@ -72,10 +72,10 @@ public class InteractionListAdapter extends RecyclerView.Adapter<InteractionList
         public void setItem(HashMap<String, Object> item) {
 
             this.moduleRecord.setText("Question: " +
-                            item.get(r.getString(R.string.MODULE)).toString());
+                            item.get(r.getString(R.string.QUESTION)).toString());
 
             this.commentRecord.setText("Tutor Response: " +
-                    item.get(r.getString(R.string.COMMENT)).toString());
+                    item.get(r.getString(R.string.ANSWER)).toString());
 
             Timestamp timestamp = (Timestamp) item.get(r.getString(R.string.DATE));
             Date sessionDate = timestamp.toDate();
