@@ -11,8 +11,10 @@ import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.preference.PreferenceManager;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
 import android.util.Log;
 
 import com.rafiki.wits.sdp.NotificationReceiver;
@@ -64,7 +66,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
                     .build();
 
             Intent intent = new Intent(this, NotificationReceiver.class);
-            intent.putExtra("documentData",j.toString());
+            intent.putExtra("documentData", j.toString());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Notification.Action moduleAction = new Notification.Action.Builder(
@@ -75,23 +77,19 @@ public class FirebaseIDService extends FirebaseMessagingService {
                     .build();
 
             Notification.Action hourAction = new Notification.Action.Builder(
-                    Icon.createWithResource(this,R.drawable.ic_mode_edit_white_24dp),
+                    Icon.createWithResource(this, R.drawable.ic_mode_edit_white_24dp),
                     "Change Hours",
                     pendingIntent)
                     .addRemoteInput(remoteHours)
                     .build();
 
-           notificationBuilder = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Please fill in your record sheet")
-                    .setContentText(remoteMessage.getData().get("hours") + " hours")
-                    .setContentIntent(pendingIntent)
+            notificationBuilder = new Notification.Builder(getApplicationContext())
+                    .setContentTitle("Reminder that you have a tutorial tomorrow")
                     .setColor(Color.rgb(25, 205, 205))
                     .setSmallIcon(R.mipmap.ic_launcher_round)
-                    .addAction(moduleAction)
-                   .setLights(Color.rgb(25,205,205),500,500)
+                    .setLights(Color.rgb(25, 205, 205), 500, 500)
                     .setDefaults(Notification.DEFAULT_ALL)
-                   .setPriority(Notification.PRIORITY_MAX)
-                    .addAction(hourAction);
+                    .setPriority(Notification.PRIORITY_MAX);
 
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
@@ -120,7 +118,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
                         .setSmallIcon(R.mipmap.ic_launcher_round)
                         .addAction(action)
                         .setDefaults(Notification.DEFAULT_ALL)
-                        .setLights(Color.rgb(25,205,205),500,500)
+                        .setLights(Color.rgb(25, 205, 205), 500, 500)
                         .setPriority(Notification.PRIORITY_HIGH);
 
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
@@ -130,14 +128,10 @@ public class FirebaseIDService extends FirebaseMessagingService {
 
                 Intent mIntent = new Intent(this, RecordSheetDialog.class);
                 mIntent.putExtra("documentData", j.toString());
-                PendingIntent mPendingIntent = PendingIntent.getActivity(this, 2, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                NotificationCompat.Action action1 = new NotificationCompat.Action((R.drawable.ic_menu_send), "Record session", mPendingIntent);
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, RECORD_MODULE)
                         .setSmallIcon(R.mipmap.ic_launcher_round)
-                        .setContentTitle("Please fill in your record sheet.")
-                        .setContentIntent(mPendingIntent)
-                        .addAction(action1)
+                        .setContentTitle("Reminder that you have a tutorial tomorrow")
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setPriority(NotificationCompat.PRIORITY_HIGH);
 
@@ -148,10 +142,11 @@ public class FirebaseIDService extends FirebaseMessagingService {
             }
         }
 
-       }
-    public void createNotificationChannel () {
+    }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    public void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "mastermaths";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("channel", name, importance);

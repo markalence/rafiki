@@ -28,6 +28,7 @@
         <service android:name="com.rafiki.wits.sdp.Service.FirebaseIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE"/>
             </intent-filter>
         </service>
 

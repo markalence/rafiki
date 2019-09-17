@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.mark.ms", appContext.getPackageName());
+        assertEquals("com.rafiki.wits.sdp", appContext.getPackageName());
     }
 }

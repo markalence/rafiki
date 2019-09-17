@@ -174,9 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-        db.collection(r.getString(R.string.COURSES))
-                .document("coms3005")
-                .collection(r.getString(R.string.TUTORIALS))
+        db.collection("schedule")
                 .orderBy(r.getString(R.string.DATE), Query.Direction.ASCENDING)
                 .get(Source.SERVER).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

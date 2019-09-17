@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.example.mark.ms"
+        applicationId "com.rafiki.wits.sdp"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
