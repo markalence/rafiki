@@ -126,7 +126,7 @@ public class TutSwipeController extends ItemTouchHelper.Callback {
         sessionCopy = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(viewHolder.getAdapterPosition()).clone();
         sessionCopy.remove("id");
 
-        if (direction == RIGHT) {
+        if (direction == ItemTouchHelper.RIGHT) {
 
             clickable = true;
 
@@ -145,12 +145,11 @@ public class TutSwipeController extends ItemTouchHelper.Callback {
                         tutAdapter.notifyItemInserted(copyPosition);
                         clickable = false;
                         firestore.collection("schedule")
-                                .add(copyMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                .add(copyMap)
+                                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                 if (task.isSuccessful()) {
-
-                                    LoginActivity.upcomingTuts.get(copyPosition).put("id", task.getResult().getId());
 
                                 } else {
                                     Toast.makeText(tutAdapter.mContext, "Couldn't re-add session at this time", Toast.LENGTH_SHORT).show();
@@ -167,7 +166,7 @@ public class TutSwipeController extends ItemTouchHelper.Callback {
                 ((TutAdapter) TutActivity.recyclerView.getAdapter()).mDataset.remove(copyPosition);
                 ((TutAdapter) TutActivity.recyclerView.getAdapter()).notifyItemRemoved(copyPosition);
                 Query query = firestore.collection("schedule")
-                        .whereEqualTo("studentNum", copyMap.get("studentNum"))
+                        .whereEqualTo("courseCode", copyMap.get("courseCode"))
                         .whereEqualTo("date", copyMap.get("date"));
 
                 query.get(Source.SERVER).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -195,8 +194,8 @@ public class TutSwipeController extends ItemTouchHelper.Callback {
             builder.setView(dialogView);
             final AlertDialog dialog = builder.create();
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            Spinner timeSpinner = dialogView.findViewById(R.id.timeSpinner);
-            Spinner hourSpinner = dialogView.findViewById(R.id.hourSpinner);
+            Spinner timeSpinner = dialogView.findViewById(R.id.startTimeSpinner);
+            Spinner hourSpinner = dialogView.findViewById(R.id.endTimeSpinner);
 
             final int index = viewHolder.getAdapterPosition();
             final Timestamp initialTimestamp = (Timestamp) LoginActivity.upcomingTuts.get(index).get("date");

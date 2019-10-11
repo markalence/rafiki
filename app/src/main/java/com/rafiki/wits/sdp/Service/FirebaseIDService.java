@@ -111,12 +111,9 @@ public class FirebaseIDService extends FirebaseMessagingService {
                         .build();
 
                 Notification.Builder notification = new Notification.Builder(getApplicationContext())
-                        .setContentTitle("Please fill in your record sheet.")
-                        .setContentText(remoteMessage.getData().get("hours") + " hours")
-                        .setContentIntent(pendingIntent)
+                        .setContentTitle("Reminder that you have a tutorial tomorrow.")
                         .setColor(Color.rgb(25, 205, 205))
                         .setSmallIcon(R.mipmap.ic_launcher_round)
-                        .addAction(action)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setLights(Color.rgb(25, 205, 205), 500, 500)
                         .setPriority(Notification.PRIORITY_HIGH);

@@ -150,8 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 .document(studentNum)
                 .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
 
-        db.collection(r.getString(R.string.RECORDSHEETS))
-                .whereEqualTo(r.getString(R.string.USERNAME), studentNum)
+        db.collection("answeredquestions")
                 .orderBy(r.getString(R.string.DATE), Query.Direction.DESCENDING)
                 .get(Source.SERVER)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
