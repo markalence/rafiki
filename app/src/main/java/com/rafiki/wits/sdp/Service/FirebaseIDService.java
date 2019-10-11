@@ -52,36 +52,12 @@ public class FirebaseIDService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         j = new JSONObject(remoteMessage.getData());
-        final String RECORD_MODULE = "recordmodule";
-        final String RECORD_HOURS = "recordhours";
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
-            RemoteInput remoteModule = new RemoteInput.Builder(RECORD_MODULE)
-                    .setLabel("Module")
-                    .build();
-
-            RemoteInput remoteHours = new RemoteInput.Builder(RECORD_HOURS)
-                    .setLabel("Modify Hours")
-                    .build();
 
             Intent intent = new Intent(this, NotificationReceiver.class);
             intent.putExtra("documentData", j.toString());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Notification.Action moduleAction = new Notification.Action.Builder(
-                    Icon.createWithResource(this, R.mipmap.ic_launcher_round),
-                    "Record Module",
-                    pendingIntent)
-                    .addRemoteInput(remoteModule)
-                    .build();
-
-            Notification.Action hourAction = new Notification.Action.Builder(
-                    Icon.createWithResource(this, R.drawable.ic_mode_edit_white_24dp),
-                    "Change Hours",
-                    pendingIntent)
-                    .addRemoteInput(remoteHours)
-                    .build();
 
             notificationBuilder = new Notification.Builder(getApplicationContext())
                     .setContentTitle("Reminder that you have a tutorial tomorrow")
@@ -102,13 +78,6 @@ public class FirebaseIDService extends FirebaseMessagingService {
             System.out.println(j.toString());
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             if (android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.M) {
-                System.out.println("THIS IS TRUE");
-
-                Notification.Action action = new Notification.Action.Builder(
-                        Icon.createWithResource(this, R.mipmap.ic_launcher_round),
-                        "Record Module",
-                        pendingIntent)
-                        .build();
 
                 Notification.Builder notification = new Notification.Builder(getApplicationContext())
                         .setContentTitle("Reminder that you have a tutorial tomorrow.")
@@ -126,7 +95,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
                 Intent mIntent = new Intent(this, RecordSheetDialog.class);
                 mIntent.putExtra("documentData", j.toString());
 
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, RECORD_MODULE)
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "rafiki")
                         .setSmallIcon(R.mipmap.ic_launcher_round)
                         .setContentTitle("Reminder that you have a tutorial tomorrow")
                         .setDefaults(Notification.DEFAULT_ALL)
@@ -144,7 +113,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
     public void createNotificationChannel() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "mastermaths";
+            CharSequence name = "rafiki";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("channel", name, importance);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);

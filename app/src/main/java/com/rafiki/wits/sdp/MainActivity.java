@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
     private TextView nameView;
     private TextView gradeView;
     private boolean exit = false;
-    private InteractionListAdapter rsa;
+    public InteractionListAdapter rsa;
     private RecyclerView recyclerView;
 
     @Override
@@ -46,37 +46,17 @@ public class MainActivity extends AppCompatActivity
         setRecyclerView();
         view = findViewById(android.R.id.content);
         r = getBaseContext().getResources();
-//        System.out.println(FirebaseInstanceId.getInstance().getId() + "     ID");
-
-        //rara
-
-        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel("scaance", "some ass", importance);
-            mChannel.setDescription("good app");
-            mChannel.enableLights(true);
-            mChannel.setLightColor(Color.RED);
-            mChannel.enableVibration(true);
-            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            mNotificationManager.createNotificationChannel(mChannel);
-        }
-
-        *//*
-         * Displaying a notification locally
-         *//*
-        MyNotificationManager.getInstance(this).displayNotification("Greetings", "Hello how are you?");*/
-
-
     }
 
-    public void setRecyclerView() {
-        recyclerView = findViewById(R.id.recordSheet);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rsa = new InteractionListAdapter(this, LoginActivity.interactionList);
-        recyclerView.setAdapter(rsa);
-        System.out.println((recyclerView.getAdapter().getItemCount()));
+    public boolean setRecyclerView() {
+        if(LoginActivity.interactionList != null) {
+            recyclerView = findViewById(R.id.recordSheet);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            rsa = new InteractionListAdapter(this, LoginActivity.interactionList);
+            recyclerView.setAdapter(rsa);
+            return true;
+        }
+        return false;
     }
 
     public void makeNavLayout() {
@@ -167,4 +147,4 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-}
+}  

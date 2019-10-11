@@ -35,7 +35,7 @@ public class QuestionSubmitter {
     }
 
 
-    public void numberPickerInit() {
+    public boolean numberPickerInit() {
 
 
         final View moduleView = mInflater.inflate(R.layout.record_module, null);
@@ -67,6 +67,8 @@ public class QuestionSubmitter {
             }
         });
         recordDialog.show();
+
+        return true;
     }
 
 }
