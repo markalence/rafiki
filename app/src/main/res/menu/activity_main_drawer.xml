@@ -19,6 +19,11 @@
                 android:icon="@drawable/ic_assignment_turned_in_black_24dp"
                 android:title="Ask a question"
                 />
+            <item
+                android:id="@+id/subscribe"
+                android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+                android:title="Subscribe to a course"
+                />
 
         </menu>
     </item>

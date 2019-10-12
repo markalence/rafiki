@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomDialogTheme" parent="android:Theme.DeviceDefault.Light.Dialog">
-        <item name="android:colorAccent">@color/accent_device_default_light</item>
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="MS" parent="Theme.AppCompat.NoActionBar">

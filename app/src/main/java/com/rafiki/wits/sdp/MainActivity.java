@@ -122,8 +122,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.record) {
             QuestionSubmitter questionSubmitter = new QuestionSubmitter(this, this.getLayoutInflater());
             questionSubmitter.numberPickerInit();
-        } else if (id == R.id.student_profile) {
-        } else if(id == R.id.contact) {
+        } else if (id == R.id.subscribe) {
+            Intent intent = new Intent(MainActivity.this,SubscriptionActivity.class);
+            startActivity(intent);
 
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     public static String password;
     public static ArrayList<HashMap<String, Object>> interactionList;
     public static ArrayList<HashMap<String, Object>> upcomingTuts;
+    public static ArrayList<HashMap<String,Object>> courseCodes;
     private boolean tutsLoaded = false;
     private boolean interactionListLoaded = false;
     private SharedPreferences mSharedPreferences;
@@ -145,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
 
         interactionList = new ArrayList<>();
         upcomingTuts = new ArrayList<>();
+        courseCodes = new ArrayList<>();
 
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
@@ -209,6 +211,20 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        db.collection(r.getString(R.string.COURSES))
+                .get(Source.SERVER)
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(DocumentSnapshot doc : task.getResult()){
+                                courseCodes.add((HashMap<String, Object>) doc.getData());
+                                System.out.println(doc.getData());
+                            }
+                        }
+                    }
+                });
 
     }
 
