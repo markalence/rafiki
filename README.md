@@ -4,8 +4,8 @@
 
 ## Project members:
 * Noah Savadier
-* Daniel Hewlett
 * Daniel Yazbek
+* Daniel Hewlett
 * Mark Alence 
 
 ## Project brief:
