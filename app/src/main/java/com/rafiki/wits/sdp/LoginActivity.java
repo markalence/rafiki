@@ -37,10 +37,12 @@ import java.util.HashMap;
 public class LoginActivity extends AppCompatActivity {
 
     public static String studentNum;
+    public static ArrayList<String> studentCourses = new ArrayList<>();
     public static String password;
+    public static String studentDocId;
     public static ArrayList<HashMap<String, Object>> interactionList;
     public static ArrayList<HashMap<String, Object>> upcomingTuts;
-    public static ArrayList<HashMap<String,Object>> courseCodes;
+    public static ArrayList<String> courseCodes;
     private boolean tutsLoaded = false;
     private boolean interactionListLoaded = false;
     private SharedPreferences mSharedPreferences;
@@ -152,6 +154,23 @@ public class LoginActivity extends AppCompatActivity {
                 .document(studentNum)
                 .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
 
+        db.collection(r.getString(R.string.STUDENTS))
+                .document(studentNum)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            studentCourses = (ArrayList<String>)
+                                    task.getResult().getData().get("courses") != null ?
+                                    (ArrayList<String>)
+                                            task.getResult().getData().get("courses")
+                                    :
+                                    new ArrayList<String>();
+                        }
+                    }
+                });
+
         db.collection("answeredquestions")
                 .orderBy(r.getString(R.string.DATE), Query.Direction.DESCENDING)
                 .get(Source.SERVER)
@@ -217,9 +236,9 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(DocumentSnapshot doc : task.getResult()){
-                                courseCodes.add((HashMap<String, Object>) doc.getData());
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult()) {
+                                courseCodes.add((String) doc.getData().get("courseCode"));
                                 System.out.println(doc.getData());
                             }
                         }
