@@ -12,8 +12,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".SubscriptionActivity"
-            android:theme="@style/CustomDialogTheme"></activity>
         <activity
             android:name=".QRActivity"
             android:label="QRActivity" />

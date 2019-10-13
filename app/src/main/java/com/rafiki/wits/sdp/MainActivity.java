@@ -123,8 +123,7 @@ public class MainActivity extends AppCompatActivity
             QuestionSubmitter questionSubmitter = new QuestionSubmitter(this, this.getLayoutInflater());
             questionSubmitter.numberPickerInit();
         } else if (id == R.id.subscribe) {
-            Intent intent = new Intent(MainActivity.this,SubscriptionActivity.class);
-            startActivity(intent);
+            SubscriptionAdder sa = new SubscriptionAdder(MainActivity.this,getLayoutInflater(), getWindowManager());
 
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
