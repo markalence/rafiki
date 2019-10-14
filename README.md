@@ -1,6 +1,7 @@
 # Welcome to the Rafiki Wiki!
 
 [![Build Status](https://travis-ci.org/markalence/rafiki.svg?branch=master)](https://travis-ci.org/markalence/rafiki)
+[![Coverage Status](https://coveralls.io/repos/github/markalence/rafiki/badge.svg?branch=master)](https://coveralls.io/github/markalence/rafiki?branch=master)
 
 ## Project members:
 * Noah Savadier
