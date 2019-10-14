@@ -38,6 +38,14 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_session">SessionActivity</string>
     <string name="title_activity_qr">QRActivity</string>
+    <string name="title_activity_tutor_home">TutorHome</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
     <string-array name="startTimeArray">
         <item>08:00</item>
         <item>09:00</item>

@@ -62,7 +62,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
             notificationBuilder = new Notification.Builder(getApplicationContext())
                     .setContentTitle("Reminder that you have a tutorial tomorrow")
                     .setColor(Color.rgb(25, 205, 205))
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setSmallIcon(R.mipmap.ic_icon)
                     .setLights(Color.rgb(25, 205, 205), 500, 500)
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setPriority(Notification.PRIORITY_MAX);
@@ -82,7 +82,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
                 Notification.Builder notification = new Notification.Builder(getApplicationContext())
                         .setContentTitle("Reminder that you have a tutorial tomorrow.")
                         .setColor(Color.rgb(25, 205, 205))
-                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setSmallIcon(R.mipmap.ic_icon)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setLights(Color.rgb(25, 205, 205), 500, 500)
                         .setPriority(Notification.PRIORITY_HIGH);
@@ -96,7 +96,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
                 mIntent.putExtra("documentData", j.toString());
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "rafiki")
-                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setSmallIcon(R.mipmap.ic_icon)
                         .setContentTitle("Reminder that you have a tutorial tomorrow")
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setPriority(NotificationCompat.PRIORITY_HIGH);

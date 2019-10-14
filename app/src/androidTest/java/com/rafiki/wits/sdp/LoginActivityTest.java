@@ -33,11 +33,18 @@ public class LoginActivityTest {
     }
 
     @Test
+    @UiThreadTest
     public void onCreate() {
         FirebaseFirestore db = mActivity.db;
         assertNotNull(db);
         assertNotNull(mActivity.mSharedPreferences);
         assertNotNull(mActivity.mSharedPreferences);
+    }
+
+    @Test
+    @UiThreadTest
+    public void getData() {
+        assertTrue(mActivity.getData("0000000"));
     }
 
 

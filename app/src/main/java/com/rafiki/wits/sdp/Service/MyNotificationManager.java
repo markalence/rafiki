@@ -31,7 +31,7 @@ public class MyNotificationManager {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(mCtx, "masterscience")
-                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setSmallIcon(R.mipmap.ic_icon_round)
                         .setContentTitle(title)
                         .setContentText(body);
 

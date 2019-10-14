@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject j = new JSONObject(userData);
                 studentNum = j.getString(r.getString(R.string.STUDENT_NUMBER));
                 password = j.getString(r.getString(R.string.PASSWORD));
-                getData();
+                getData(studentNum);
             } catch (JSONException e) {
                 e.printStackTrace();
                 getLoginInfo();
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void getData() {
+    public boolean getData(final String studentNum) {
 
         interactionList = new ArrayList<>();
         upcomingTuts = new ArrayList<>();
@@ -241,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
+return true;
     }
 
 }
