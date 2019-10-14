@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     public static ArrayList<String> courseCodes;
     private boolean tutsLoaded = false;
     private boolean interactionListLoaded = false;
-    private SharedPreferences mSharedPreferences;
+    public SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private Resources r;
     private FirebaseAuth firebaseAuth;
@@ -64,14 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         db.setFirestoreSettings(settings);
         firebaseAuth = FirebaseAuth.getInstance();
-
-
         r = getBaseContext().getResources();
         setContentView(R.layout.login_loading);
         progressBar = findViewById(R.id.progress);
         WanderingCubes wc = new WanderingCubes();
         progressBar.setIndeterminateDrawable(wc);
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
         String userData = mSharedPreferences.getString(r.getString(R.string.USER_DATA), r.getString(R.string.EMPTY));

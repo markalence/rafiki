@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             //startAnimationFromBackgroundThread();
         } else if (id == R.id.record) {
-            QuestionSubmitter questionSubmitter = new QuestionSubmitter(this, this.getLayoutInflater());
+            QuestionSubmitter questionSubmitter = new QuestionSubmitter(MainActivity.this, this.getLayoutInflater());
             questionSubmitter.numberPickerInit();
         } else if (id == R.id.subscribe) {
             SubscriptionAdder sa = new SubscriptionAdder(MainActivity.this,getLayoutInflater(), getWindowManager());

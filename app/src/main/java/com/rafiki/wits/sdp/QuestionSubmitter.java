@@ -36,8 +36,6 @@ public class QuestionSubmitter {
 
 
     public boolean numberPickerInit() {
-
-
         final View moduleView = mInflater.inflate(R.layout.record_module, null);
         final Button moduleCancel = moduleView.findViewById(R.id.moduleCancel);
         final Button moduleConfirm = moduleView.findViewById(R.id.moduleConfirm);

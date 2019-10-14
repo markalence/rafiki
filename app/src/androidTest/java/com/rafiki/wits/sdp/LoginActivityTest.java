@@ -35,23 +35,10 @@ public class LoginActivityTest {
     @Test
     public void onCreate() {
         FirebaseFirestore db = mActivity.db;
+        assertNotNull(mActivity.mSharedPreferences);
         assertNotNull(db);
     }
 
-    @Test
-    @UiThreadTest
-    public void directUser() {
-        JSONObject j = new JSONObject();
-        try {
-            j.put("deviceToken", "123");
-            j.put("studentNumber", "0000000");
-            j.put("password", "test123");
-            assertTrue(mActivity.directUser(j.toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        assertFalse(mActivity.directUser("empty"));
-    }
 
 //    @Test
 //    public void progressBarInit(){
