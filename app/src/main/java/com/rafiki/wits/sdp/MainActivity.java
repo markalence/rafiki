@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity
             recyclerView.setAdapter(rsa);
             return true;
         }
-        return false;
+        return true;
     }
 
-    public void makeNavLayout() {
+    public boolean makeNavLayout() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity
 //        gradeView = navigationView.getHeaderView(0).findViewById(R.id.grade);
         nameView.setText(LoginActivity.studentNum);
         Picasso.get().load(R.mipmap.header_background).into(header);
+
+        return true;
     }
 
     @Override
@@ -131,20 +133,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void startAnimationFromBackgroundThread() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(new Runnable() {
-            @Override
-            public void run() {
-                // this runs on a background thread
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //dateDialog.show();
-                    }
-                });
-            }
-        });
-    }
+
 
 }  
