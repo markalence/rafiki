@@ -35,8 +35,9 @@ public class LoginActivityTest {
     @Test
     public void onCreate() {
         FirebaseFirestore db = mActivity.db;
-        assertNotNull(mActivity.mSharedPreferences);
         assertNotNull(db);
+        assertNotNull(mActivity.mSharedPreferences);
+        assertNotNull(mActivity.mSharedPreferences);
     }
 
 

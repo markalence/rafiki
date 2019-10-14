@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean tutsLoaded = false;
     private boolean interactionListLoaded = false;
     public SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
+    public SharedPreferences.Editor mEditor;
     private Resources r;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
