@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
     public boolean setRecyclerView() {
         if(LoginActivity.interactionList != null) {
-            recyclerView = findViewById(R.id.recordSheet);
+            recyclerView = findViewById(R.id.questionList);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             rsa = new InteractionListAdapter(this, LoginActivity.interactionList);
             recyclerView.setAdapter(rsa);
