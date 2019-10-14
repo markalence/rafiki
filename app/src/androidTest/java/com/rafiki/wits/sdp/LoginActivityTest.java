@@ -44,7 +44,8 @@ public class LoginActivityTest {
     @Test
     @UiThreadTest
     public void getData() {
-        assertTrue(mActivity.getData("0000000"));
+        mActivity.studentNum = "0000000";
+        assertTrue(mActivity.getData());
     }
 
 

@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private Resources r;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
+    private static int status = 0;
 
     FirebaseFirestore db;
 
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject j = new JSONObject(userData);
                 studentNum = j.getString(r.getString(R.string.STUDENT_NUMBER));
                 password = j.getString(r.getString(R.string.PASSWORD));
-                getData(studentNum);
+                getData();
             } catch (JSONException e) {
                 e.printStackTrace();
                 getLoginInfo();
@@ -118,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    status = 1;
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
                                     JSONObject j = new JSONObject();
                                     try {
@@ -141,16 +143,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public boolean getData(final String studentNum) {
 
-        interactionList = new ArrayList<>();
-        upcomingTuts = new ArrayList<>();
-        courseCodes = new ArrayList<>();
-
+    public void updateToken() {
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
-                .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
+                .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                        }
+                    }
+                });
+    }
 
+    public void getStudentCourses() {
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
                 .get()
@@ -158,16 +165,19 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            studentCourses = (ArrayList<String>)
-                                    task.getResult().getData().get("courses") != null ?
-                                    (ArrayList<String>)
-                                            task.getResult().getData().get("courses")
-                                    :
-                                    new ArrayList<String>();
+                            if (task.getResult().getData() == null) {
+                                studentCourses = new ArrayList<>();
+                            } else if (task.getResult().getData().get("courses") == null) {
+                                studentCourses = new ArrayList<>();
+                            } else {
+                                studentCourses = (ArrayList<String>) task.getResult().getData();
+                            }
                         }
                     }
                 });
+    }
 
+    public void getAnsweredQuestions() {
         db.collection("answeredquestions")
                 .orderBy(r.getString(R.string.DATE), Query.Direction.DESCENDING)
                 .get(Source.SERVER)
@@ -178,19 +188,16 @@ public class LoginActivity extends AppCompatActivity {
                             for (DocumentSnapshot doc : task.getResult()) {
                                 interactionList.add((HashMap<String, Object>) doc.getData());
                             }
-                            interactionListLoaded = true;
-                            if (tutsLoaded && interactionListLoaded) {
-                                finish();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
+                            getCourseList();
 
-                            }
                         } else {
                             Toast.makeText(getBaseContext(), r.getString(R.string.NETWORK_ERROR), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
 
+    public void getSchedule() {
         db.collection("schedule")
                 .orderBy(r.getString(R.string.DATE), Query.Direction.ASCENDING)
                 .get(Source.SERVER).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -202,8 +209,6 @@ public class LoginActivity extends AppCompatActivity {
                         HashMap<String, Object> info = (HashMap<String, Object>) doc.getData();
                         upcomingTuts.add(info);
                     }
-                    tutsLoaded = true;
-
                     firebaseAuth.signInWithEmailAndPassword(studentNum + r.getString(R.string.EMAIL_POSTFIX), password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -216,18 +221,15 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
-
-
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(intent);
                 } else {
                     Toast.makeText(getBaseContext(), r.getString(R.string.NETWORK_ERROR), Toast.LENGTH_SHORT).show();
                     System.out.println(task.getException());
                 }
             }
         });
+    }
 
+    public void getCourseList() {
         db.collection(r.getString(R.string.COURSES))
                 .get(Source.SERVER)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -241,7 +243,23 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public boolean getData() {
+
+        interactionList = new ArrayList<>();
+        upcomingTuts = new ArrayList<>();
+        courseCodes = new ArrayList<>();
+
+        updateToken();
+        getStudentCourses();
+        getAnsweredQuestions();
+        getCourseList();
+        getSchedule();
+
+
 return true;
+
     }
 
 }
