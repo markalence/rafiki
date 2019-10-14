@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
             //startAnimationFromBackgroundThread();
         } else if (id == R.id.record) {
             QuestionSubmitter questionSubmitter = new QuestionSubmitter(MainActivity.this, this.getLayoutInflater());
-            questionSubmitter.numberPickerInit();
+            questionSubmitter.questionDialogInit();
         } else if (id == R.id.subscribe) {
             SubscriptionAdder sa = new SubscriptionAdder(MainActivity.this,getLayoutInflater(), getWindowManager());
 
