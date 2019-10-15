@@ -36,6 +36,7 @@ public class LoginActivityTest {
     @UiThreadTest
     public void onCreate() {
         mActivity.studentNum = "0000000";
+        mActivity.password = "test123";
         FirebaseFirestore db = mActivity.db;
         assertNotNull(db);
         assertNotNull(mActivity.mSharedPreferences);

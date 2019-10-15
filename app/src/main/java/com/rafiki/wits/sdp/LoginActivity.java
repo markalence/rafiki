@@ -39,18 +39,16 @@ public class LoginActivity extends AppCompatActivity {
     public static String studentNum;
     public static ArrayList<String> studentCourses = new ArrayList<>();
     public static String password;
-    public static String studentDocId;
     public static ArrayList<HashMap<String, Object>> interactionList;
     public static ArrayList<HashMap<String, Object>> upcomingTuts;
     public static ArrayList<String> courseCodes;
     private boolean tutsLoaded = false;
-    private boolean interactionListLoaded = false;
     public SharedPreferences mSharedPreferences;
     public SharedPreferences.Editor mEditor;
     private Resources r;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
-    private static int status = 0;
+    private static Integer isTutor = 0;
 
     FirebaseFirestore db;
 
@@ -119,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    status = 1;
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
                                     JSONObject j = new JSONObject();
                                     try {
@@ -170,8 +167,12 @@ public class LoginActivity extends AppCompatActivity {
                             } else if (task.getResult().getData().get("courses") == null) {
                                 studentCourses = new ArrayList<>();
                             } else {
-                                studentCourses = (ArrayList<String>) task.getResult().getData();
+                                studentCourses = (ArrayList<String>) task.getResult().getData().get("courses");
                             }
+                            if (task.getResult().getData().get("roles") == "tutor") {
+                                isTutor = 1;
+                            }
+
                         }
                     }
                 });
@@ -213,8 +214,13 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
+                                if (isTutor == 1) {
+                                    Intent intent = new Intent(LoginActivity.this, TutorHomeActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
                             }
                             if (!task.isSuccessful()) {
                                 System.out.println(r.getString(R.string.INVALID_LOGIN));
@@ -258,7 +264,7 @@ public class LoginActivity extends AppCompatActivity {
         getSchedule();
 
 
-return true;
+        return true;
 
     }
 
