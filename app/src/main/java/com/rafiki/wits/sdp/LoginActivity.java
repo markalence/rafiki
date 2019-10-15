@@ -169,9 +169,10 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 studentCourses = (ArrayList<String>) task.getResult().getData().get("courses");
                             }
-                            if (task.getResult().getData().get("roles") == "tutor") {
+                            if (task.getResult().getData().get("role").equals("tutor")) {
                                 isTutor = 1;
                             }
+                            System.out.println(task.getResult().getData() + " DATAAAA");
 
                         }
                     }

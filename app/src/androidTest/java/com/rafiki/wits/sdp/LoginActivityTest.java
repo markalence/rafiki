@@ -30,13 +30,13 @@ public class LoginActivityTest {
     @Before
     public void setUp() throws Exception {
         mActivity = mActivityTestRule.getActivity();
+        LoginActivity.studentNum = "0000000";
+        LoginActivity.password = "test123";
     }
 
     @Test
     @UiThreadTest
     public void onCreate() {
-        mActivity.studentNum = "0000000";
-        mActivity.password = "test123";
         FirebaseFirestore db = mActivity.db;
         assertNotNull(db);
         assertNotNull(mActivity.mSharedPreferences);
@@ -46,7 +46,6 @@ public class LoginActivityTest {
     @Test
     @UiThreadTest
     public void getData() {
-        mActivity.studentNum = "0000000";
         assertTrue(mActivity.getData());
     }
 
