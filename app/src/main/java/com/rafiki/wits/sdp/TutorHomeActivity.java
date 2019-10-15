@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,21 +32,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class TutorHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static View view;
-    public static ArrayList<HashMap<String,Object>> questions;
+    public static ArrayList<HashMap<String, Object>> questions = new ArrayList<>();
     public ArrayList<String> courses;
     private Resources r;
     private TextView nameView;
     private TextView gradeView;
     private boolean exit = false;
-    public InteractionListAdapter rsa;
+    public PendingQuestionAdapter pqa;
     private RecyclerView recyclerView;
     public FirebaseFirestore db;
 
@@ -55,6 +54,8 @@ public class TutorHomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_tutor_home);
         db = FirebaseFirestore.getInstance();
         questions = new ArrayList<>();
+        pqa = new PendingQuestionAdapter(TutorHomeActivity.this, getLayoutInflater(),questions);
+        getQuestions();
         makeNavLayout();
         setRecyclerView();
         view = findViewById(android.R.id.content);
@@ -62,28 +63,33 @@ public class TutorHomeActivity extends AppCompatActivity
     }
 
     public boolean setRecyclerView() {
-        if(LoginActivity.interactionList != null) {
+        if (LoginActivity.interactionList != null) {
             recyclerView = findViewById(R.id.questionList);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            rsa = new InteractionListAdapter(this, LoginActivity.interactionList);
-            recyclerView.setAdapter(rsa);
+            recyclerView.setAdapter(pqa);
             return true;
         }
         return false;
     }
 
-    public void getQuestions(){
 
-        for(String course : courses){
+    public void getQuestions() {
+
+        for (String course : LoginActivity.studentCourses) {
             db.collection("pendingquestions")
-                    .whereEqualTo("courseCode",course)
+                    .whereEqualTo("courseCode", course)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                             for(DocumentSnapshot doc : task.getResult()){
-                                 questions.add((HashMap<String, Object>) doc.getData());
-                             }
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot doc : task.getResult()) {
+                                    System.out.println(doc.getData());
+                                    questions.add((HashMap<String, Object>) doc.getData());
+                                    pqa.notifyDataSetChanged();
+
+                                }
+                            }
                         }
                     });
         }

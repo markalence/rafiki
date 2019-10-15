@@ -23,32 +23,30 @@ public class TutActivity extends AppCompatActivity {
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     static ArrayList<HashMap<String, Object>> sessionItems = new ArrayList<>();
     static RecyclerView recyclerView;
+    ArrayList<HashMap<String,Object>> upcomingTuts = new ArrayList<>();
     static TutAdapter tutAdapter;
-    static ImageButton deleteButton;
     static Toolbar toolbar;
-    static TextView toolbarTitle;
-    static View sessionView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
+        if(LoginActivity.upcomingTuts != null){
+            upcomingTuts = LoginActivity.upcomingTuts;
+        }
         sessionItems.clear();
-        sessionView = findViewById(android.R.id.content);
-        deleteButton = findViewById(R.id.deleteButton);
-        deleteButton.setVisibility(View.INVISIBLE);
-        toolbarTitle = findViewById(R.id.toolbarTitle);
         toolbarInit();
         recyclerViewInit();
     }
 
 
-    public void toolbarInit() {
+    public boolean toolbarInit() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        return true;
     }
 
     @Override
@@ -61,12 +59,13 @@ public class TutActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void recyclerViewInit() {
+    public boolean recyclerViewInit() {
         recyclerView = findViewById(R.id.sessionSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tutAdapter = new TutAdapter(this, LoginActivity.upcomingTuts);
-        System.out.println(LoginActivity.upcomingTuts);
+        tutAdapter = new TutAdapter(TutActivity.this, LoginActivity.upcomingTuts);
+        System.out.println(upcomingTuts);
         recyclerView.setAdapter(tutAdapter);
+        return true;
     }
 
     @Override

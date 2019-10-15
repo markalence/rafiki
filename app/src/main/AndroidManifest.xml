@@ -16,6 +16,9 @@
         <activity
             android:name=".QRActivity"
             android:label="QRActivity" />
+        <activity
+            android:name=".TutorHomeActivity"
+            android:label="TutorHomeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".LoginActivity"

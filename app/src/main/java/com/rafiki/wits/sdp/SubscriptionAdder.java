@@ -56,7 +56,6 @@ public class SubscriptionAdder {
                 addCourse();
             }
         });
-
         cancel = view.findViewById(R.id.subCancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +63,6 @@ public class SubscriptionAdder {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
 
     }

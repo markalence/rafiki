@@ -32,27 +32,15 @@ public class TutAdapter extends RecyclerView.Adapter<TutAdapter.ViewHolder> {
 
     ArrayList<HashMap<String, Object>> mDataset;
     Context mContext;
-    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-    private String DATE_FORMAT_LONG = "EEEE, MMMM dd";
     private String DATE_FORMAT_SHORT = "dd/MM";
-    private String HOUR_FORMAT = "kk:mm";
-    private ArrayList<HashMap<String, Object>> selectedItems;
-    private ArrayList<HashMap<String, Object>> copyItems;
-    private ArrayList<Integer> indexList;
-    private ArrayList<HashMap<String,Object>> copyDataset;
     Resources r;
-    SimpleDateFormat simpleDateFormatLong = new SimpleDateFormat(DATE_FORMAT_LONG);
     SimpleDateFormat simpleDateFormatShort = new SimpleDateFormat(DATE_FORMAT_SHORT);
-    boolean clickable;
 
 
     public TutAdapter(Context context, ArrayList<HashMap<String, Object>> myDataset) {
         mDataset = myDataset;
+        if(myDataset == null){mDataset = new ArrayList<>();}
         mContext = context;
-        selectedItems = new ArrayList<>();
-        copyItems = new ArrayList<>();
-        indexList = new ArrayList<>();
         r = mContext.getResources();
 
     }
@@ -71,54 +59,17 @@ public class TutAdapter extends RecyclerView.Adapter<TutAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final TutAdapter.ViewHolder holder, int position) {
 
         holder.sessionLayout.setBackgroundResource(R.drawable.bottomline);
-        SimpleDateFormat hourFormat = new SimpleDateFormat(HOUR_FORMAT);
         final Timestamp timestamp = (Timestamp) mDataset.get(position).get(r.getString(R.string.DATE));
         final Date dateRecord = timestamp.toDate();
-        String dateStringLong = simpleDateFormatLong.format(dateRecord) + "\n" + hourFormat.format(dateRecord);
-        holder.sessionInfo.setText(dateStringLong);
-        holder.documentId = (String) mDataset.get(position).get("docId");
         final String dateStringShort = simpleDateFormatShort.format(dateRecord);
-        showFrontOfDrawable(holder,holder.getAdapterPosition(),dateStringShort);
-
         final TextDrawable drawableFront = TextDrawable.builder()
                 .beginConfig()
                 .fontSize((int)((18 *Resources.getSystem().getDisplayMetrics().density)))
                 .endConfig()
                 .buildRound(dateStringShort, ColorGenerator.MATERIAL.getRandomColor());
         drawableFront.setPadding(30, 30, 30, 30);
-
+        holder.sessionInfo.setText(mDataset.get(position).get("courseCode").toString().toUpperCase());
         holder.imageView.setImageDrawable(drawableFront);
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final ObjectAnimator oa1 = ObjectAnimator.ofFloat(holder.imageView, "scaleY", 1f, 0f);
-                oa1.setDuration(90);
-                final ObjectAnimator oa2 = ObjectAnimator.ofFloat(holder.imageView, "scaleY", 0f, 1f);
-                oa2.setDuration(90);
-                oa1.setInterpolator(new DecelerateInterpolator());
-                oa2.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                oa1.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        if (holder.side.equals("front")) {
-
-                            showBackOfDrawable(holder, holder.getAdapterPosition());
-
-                        } else {
-
-                            showFrontOfDrawable(holder, holder.getAdapterPosition(), dateStringShort);
-
-                        }
-                        oa2.start();
-                    }
-                });
-                oa1.start();
-            }
-        });
-        //holder.imageView.setPadding(20,20,20,20)
-
     }
 
     @Override
@@ -129,59 +80,15 @@ public class TutAdapter extends RecyclerView.Adapter<TutAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView sessionInfo;
-        String documentId;
         ConstraintLayout sessionLayout;
         ImageView imageView;
-        String side;
 
         public ViewHolder(View itemView) {
             super(itemView);
             sessionInfo = itemView.findViewById(R.id.scheduleDetails);
             sessionLayout = itemView.findViewById(R.id.sessionLayout);
             imageView = itemView.findViewById(R.id.sessionInfo);
-            side = "front";
         }
     }
 
-
-    public void showBackOfDrawable(ViewHolder holder, int position) {
-
-        holder.imageView.setImageResource(R.drawable.ic_check_white_24dp);
-        holder.imageView.setBackgroundResource(R.drawable.circle);
-        holder.imageView.setPadding(30, 30, 30, 30);
-        holder.sessionLayout.setBackgroundColor(Color.rgb(200, 200, 200));
-        selectedItems.add(mDataset.get(position));
-        holder.side = "back";
-        TutActivity.toolbar.setBackgroundColor(Color.rgb(190, 190, 190));
-        TutActivity.toolbarTitle.setVisibility(View.INVISIBLE);
-//        TutActivity.deleteButton.setVisibility(View.VISIBLE);
-//        TutActivity.deleteButton.setFocusable(true);
-
-
-    }
-
-    public void showFrontOfDrawable(ViewHolder holder, int position, String dateStringShort) {
-
-        final TextDrawable drawableFront = TextDrawable.builder()
-                .beginConfig()
-                .fontSize((int)((18 *Resources.getSystem().getDisplayMetrics().density)))
-                .endConfig()
-                .buildRound(dateStringShort, ColorGenerator.MATERIAL.getRandomColor());
-        drawableFront.setPadding(30, 30, 30, 30);
-
-        holder.sessionLayout.setBackgroundResource(R.drawable.bottomline);
-
-        holder.imageView.setImageDrawable(drawableFront);
-        holder.imageView.setBackgroundColor(Color.TRANSPARENT);
-        holder.imageView.setPadding(0, 0, 0, 0);
-        holder.side = "front";
-        if (!selectedItems.isEmpty()) {
-            selectedItems.remove(mDataset.get(position));
-        }
-        if (selectedItems.isEmpty()) {
-            TutActivity.toolbarTitle.setVisibility(View.VISIBLE);
-            TutActivity.toolbar.setBackgroundColor(Color.rgb(25, 205, 205));
-            TutActivity.deleteButton.setVisibility(View.INVISIBLE);
-        }
-    }
 }
