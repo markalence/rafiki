@@ -193,7 +193,6 @@ public class LoginActivity extends AppCompatActivity {
                             for (DocumentSnapshot doc : task.getResult()) {
                                 interactionList.add((HashMap<String, Object>) doc.getData());
                             }
-                            getCourseList();
 
                         } else {
                             Toast.makeText(getBaseContext(), r.getString(R.string.NETWORK_ERROR), Toast.LENGTH_SHORT).show();

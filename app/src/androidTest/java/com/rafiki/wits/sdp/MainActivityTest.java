@@ -2,6 +2,7 @@ package com.rafiki.wits.sdp;
 
 import android.view.View;
 
+import androidx.test.annotation.UiThreadTest;
 import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
@@ -27,6 +28,7 @@ public class MainActivityTest {
     }
 
     @Test
+    @UiThreadTest
     public void testLaunch(){
 
         View view = mActivity.findViewById(R.id.main_view);

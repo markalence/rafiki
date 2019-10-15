@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -76,6 +77,7 @@ public class SubscriptionAdder {
             recyclerView.setMinimumWidth(width);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             sa = new SubscriptionAdapter(context, LoginActivity.courseCodes);
+            System.out.println(LoginActivity.courseCodes.size() +  "  SIZEEE");
             recyclerView.setAdapter(sa);
             textView = view.findViewById(R.id.subTextView);
             textView.setTextSize(1, (float) (width * 0.015));
