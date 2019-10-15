@@ -47,7 +47,7 @@ The mobile application contains most of the logic and computational responsibili
 
 The Firebase console and Google Cloud components are independent in nature and handle all provided services/analytics. The Firebase console component further handles data requests by communicating through a NoSQL interface with the Cloud Firestore database component which is responsible for storing all Rafiki logic data and user data. 
 
-### Physical view: Deployment diagram
+### Physical view: Deployment diagram   
 
 The deployment diagram observed is comprised of two major devices, the mobile Android device and the Google servers which communicate over a HTTP/SSL connection.
 ![Deployment Diagram](https://user-images.githubusercontent.com/47977629/65031604-d0299b00-d941-11e9-92e3-e92791698b20.png)
