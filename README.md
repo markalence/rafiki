@@ -74,7 +74,7 @@ Upon opening the application, the user is intuitively presented with the option 
 
 Once present at the home screen, the user will be presented with previously posted course related questions and their answers. There are several options present for the user to select. 
 
-If the user chooses question services then they will provided with the related text fields to do so. Similarly if QR code services is chosen, the camera application will open and the user will be able to scan QR codes. Lastly, the user can view upcoming events in the event services activity. 
+If the user chooses question services then they will provided with the related text fields to do so, similarly if QR code services is chosen, the camera application will open and the user will be able to scan QR codes. Lastly, the user can view upcoming events in the event services activity. 
 
 ### Logical view: Class diagram
 
