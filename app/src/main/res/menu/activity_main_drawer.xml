@@ -10,38 +10,27 @@
                 android:icon="@drawable/ic_calender"
                 android:title="Upcoming Sessions" />
             <item
-                android:id="@+id/book"
-                android:icon="@drawable/ic_add_circle_black_24dp"
+                android:id="@+id/scan"
+                android:icon="@drawable/ic_linked_camera_black_24dp"
                 android:title="Scan In"/>
 
             <item
                 android:id="@+id/record"
-                android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+                android:icon="@drawable/ic_chat_black_24dp"
                 android:title="Ask a question"
                 />
             <item
                 android:id="@+id/subscribe"
-                android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+                android:icon="@drawable/ic_add_circle_black_24dp"
                 android:title="Subscribe to a course"
+                />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_arrow_back_black_24dp"
+                android:title="Log out"
                 />
 
         </menu>
     </item>
-
-    <group android:checkableBehavior="single">
-
-
-
-        <item
-            android:id="@+id/student_profile"
-            android:icon="@drawable/ic_profile"
-            android:title="My Profile" />
-        <item
-            android:id="@+id/contact"
-            android:icon="@drawable/ic_contact"
-            android:title="Contact Us" />
-
-    </group>
-
 
 </menu>

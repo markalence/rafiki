@@ -1,5 +1,6 @@
 package com.rafiki.wits.sdp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -42,9 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     public static ArrayList<HashMap<String, Object>> interactionList;
     public static ArrayList<HashMap<String, Object>> upcomingTuts;
     public static ArrayList<String> courseCodes;
-    private boolean tutsLoaded = false;
     public SharedPreferences mSharedPreferences;
     public SharedPreferences.Editor mEditor;
+    public static Context context;
     private Resources r;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         interactionList = new ArrayList<>();
+        context = this;
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(false)
@@ -132,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                                 if (!task.isSuccessful()) {
+                                    getLoginInfo();
                                     Toast.makeText(getBaseContext(), r.getString(R.string.INVALID_LOGIN), Toast.LENGTH_SHORT).show();
                                 }
                             }

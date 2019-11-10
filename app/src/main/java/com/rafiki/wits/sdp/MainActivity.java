@@ -2,6 +2,7 @@ package com.rafiki.wits.sdp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,10 +35,11 @@ public class MainActivity extends AppCompatActivity
     static View view;
     private Resources r;
     private TextView nameView;
-    private TextView gradeView;
     private boolean exit = false;
     public InteractionListAdapter rsa;
     private RecyclerView recyclerView;
+    public SharedPreferences mSharedPreferences;
+    public SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.sessions) {
             Intent intent = new Intent(MainActivity.this, TutActivity.class);
             startActivity(intent);
-        } else if (id == R.id.book) {
+        } else if (id == R.id.scan) {
             Intent intent = new Intent(MainActivity.this, QRActivity.class);
             startActivity(intent);
             //startAnimationFromBackgroundThread();
@@ -126,8 +129,16 @@ public class MainActivity extends AppCompatActivity
             questionSubmitter.questionDialogInit();
         } else if (id == R.id.subscribe) {
             SubscriptionAdder sa = new SubscriptionAdder(MainActivity.this,getLayoutInflater(), getWindowManager());
-
         }
+        else if(id == R.id.logout){
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.context);
+            mEditor = mSharedPreferences.edit();
+            mEditor.clear();
+            mEditor.commit();
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+        }
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
