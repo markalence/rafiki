@@ -3,13 +3,9 @@ package com.rafiki.wits.sdp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TutActivity extends AppCompatActivity {
+public class StudentScheduleActivity extends AppCompatActivity {
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     static ArrayList<HashMap<String, Object>> sessionItems = new ArrayList<>();
@@ -53,7 +49,7 @@ public class TutActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(TutActivity.this, MainActivity.class);
+            Intent intent = new Intent(StudentScheduleActivity.this, MainActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -62,7 +58,7 @@ public class TutActivity extends AppCompatActivity {
     public boolean recyclerViewInit() {
         recyclerView = findViewById(R.id.sessionSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tutAdapter = new TutAdapter(TutActivity.this, LoginActivity.upcomingTuts);
+        tutAdapter = new TutAdapter(StudentScheduleActivity.this, LoginActivity.upcomingTuts);
         System.out.println(upcomingTuts);
         recyclerView.setAdapter(tutAdapter);
         return true;

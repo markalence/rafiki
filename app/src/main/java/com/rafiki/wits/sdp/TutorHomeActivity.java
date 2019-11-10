@@ -42,7 +42,6 @@ public class TutorHomeActivity extends AppCompatActivity
     public ArrayList<String> courses;
     private Resources r;
     private TextView nameView;
-    private TextView gradeView;
     private boolean exit = false;
     public PendingQuestionAdapter pqa;
     private RecyclerView recyclerView;
@@ -148,7 +147,10 @@ public class TutorHomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        if(id == R.id.sessions){
+            Intent intent = new Intent(TutorHomeActivity.this,TutorScheduleActivity.class);
+            startActivity(intent);
+        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

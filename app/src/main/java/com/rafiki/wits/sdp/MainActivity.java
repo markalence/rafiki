@@ -25,9 +25,6 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.sessions) {
-            Intent intent = new Intent(MainActivity.this, TutActivity.class);
+            Intent intent = new Intent(MainActivity.this, StudentScheduleActivity.class);
             startActivity(intent);
         } else if (id == R.id.scan) {
             Intent intent = new Intent(MainActivity.this, QRActivity.class);

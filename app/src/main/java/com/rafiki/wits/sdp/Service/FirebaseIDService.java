@@ -27,11 +27,10 @@ import org.json.JSONObject;
 
 public class FirebaseIDService extends FirebaseMessagingService {
 
-    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-    String firstName, lastName, username, grade;
     private SharedPreferences.Editor mEditor;
     public static Notification.Builder notificationBuilder;
     public static JSONObject j;
+
 
 
     @Override

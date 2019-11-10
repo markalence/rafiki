@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             getLoginInfo();
 
         } else {
-
+            System.out.println(userData + " Arse?");
             try {
                 JSONObject j = new JSONObject(userData);
                 studentNum = j.getString(r.getString(R.string.STUDENT_NUMBER));
@@ -145,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void updateToken() {
+        System.out.println("TOKEN HERE    " +  mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
                 .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null))
@@ -206,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getSchedule() {
         db.collection("schedule")
-                .orderBy(r.getString(R.string.DATE), Query.Direction.ASCENDING)
+                .orderBy("startTime", Query.Direction.ASCENDING)
                 .get(Source.SERVER).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
