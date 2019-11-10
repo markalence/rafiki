@@ -30,7 +30,7 @@ public class MyNotificationManager {
     public void displayNotification(String title, String body) {
 
         NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(mCtx, "masterscience")
+                new NotificationCompat.Builder(mCtx, "rafiki")
                         .setSmallIcon(R.mipmap.ic_icon_round)
                         .setContentTitle(title)
                         .setContentText(body);

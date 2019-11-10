@@ -32,7 +32,6 @@ public class MainActivityTest {
     public void testLaunch(){
 
         View view = mActivity.findViewById(R.id.main_view);
-
         assertNotNull(view);
 
     }

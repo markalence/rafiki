@@ -64,7 +64,9 @@ public class SubscriptionAdder {
                 dialog.dismiss();
             }
         });
-        dialog.show();
+        if(context != null) {
+            dialog.show();
+        }
 
     }
 
