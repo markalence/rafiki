@@ -11,10 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -52,6 +54,7 @@ public class QuestionSubmitter {
                 }
                 docData.put("studentNumber", LoginActivity.studentNum);
                 docData.put("question",et.getText().toString());
+                docData.put("date", new Timestamp(new Date()));
                 firestore.collection("pendingquestions").add(docData);
                 recordDialog.dismiss();
                 Toast.makeText(mContext, "Thank you! Your question has been submitted.", Toast.LENGTH_SHORT).show();

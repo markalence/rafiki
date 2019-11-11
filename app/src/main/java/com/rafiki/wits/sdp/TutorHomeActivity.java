@@ -159,6 +159,9 @@ public class TutorHomeActivity extends AppCompatActivity
             Announcement announcement = new Announcement(this,getLayoutInflater());
             announcement.getCourseSelection();
         }
+        else if(id == R.id.subscribe){
+            new SubscriptionAdder(TutorHomeActivity.this,getLayoutInflater(), getWindowManager());
+        }
         else if(id == R.id.logout){
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.context);
             mEditor = mSharedPreferences.edit();

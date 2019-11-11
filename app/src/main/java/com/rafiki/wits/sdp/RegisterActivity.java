@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText confirmPassword;
     private Button registerButton;
     private FirebaseFirestore db;
+    RadioButton radioButton;
     SharedPreferences.Editor mEditor;
     SharedPreferences mSharedPreferences;
 
@@ -49,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.regButton);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
-
+        radioButton = findViewById(R.id.radioButton);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
                                         writeUserInfo();
-                                        Toast.makeText(getBaseContext(),"Awe", Toast.LENGTH_SHORT);
                                     }
                                     else{
                                         System.out.println(task.getException().toString());
-                                        Toast.makeText(getBaseContext(), "Unlux", Toast.LENGTH_SHORT);
                                     }
                                 }
                             });
@@ -86,8 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                         j.put("password",password.getText().toString());
                         mEditor.putString("userData", j.toString());
                         mEditor.commit();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -107,12 +106,22 @@ public class RegisterActivity extends AppCompatActivity {
     private void writeUserInfo(){
         Map userInfo = new HashMap();
         userInfo.put("studentNumber",studentNumber.getText().toString());
+        if(radioButton.isChecked()){
+            System.out.println("HELL YUH");
+            userInfo.put("role","tutor");
+        }
+        else{
+            System.out.println("HELL NAH");
+            userInfo.put("role","student");
+        }
         db.collection("students").document(studentNumber.getText().toString())
                 .set(userInfo)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            startActivity(intent);
                             Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT);
                         }
                     }

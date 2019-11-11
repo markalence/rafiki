@@ -13,6 +13,11 @@
             android:icon="@drawable/ic_chat_black_24dp"
             android:title="Make announcement" />
         <item
+            android:id="@+id/subscribe"
+            android:icon="@drawable/ic_add_circle_black_24dp"
+            android:title="Add yourself to a course"
+            />
+        <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_arrow_back_black_24dp"
             android:title="Log out"
