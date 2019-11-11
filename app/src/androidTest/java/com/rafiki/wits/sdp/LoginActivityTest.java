@@ -41,6 +41,14 @@ public class LoginActivityTest {
         assertNotNull(db);
         assertNotNull(mActivity.mSharedPreferences);
         assertNotNull(mActivity.mSharedPreferences);
+        mActivity.getData();
+        assertTrue(mActivity.tokenUpdated);
+        assertTrue(mActivity.coursesRetrieved);
+        assertTrue(mActivity.scheduleRetrieved);
+        assertTrue(mActivity.announcementsRetrieved);
+        assertTrue(mActivity.interactionsRetrieved);
+        assertNotNull(mActivity.mSharedPreferences.getString("userData","empty"));
+
     }
 
 

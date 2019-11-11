@@ -46,7 +46,7 @@ public class StudentScheduleActivityTest {
     @Test
     @UiThreadTest
     public void onCreate(){
-        assertTrue(mActivity.sessionItems.size()==0);
+        assertTrue(StudentScheduleActivity.sessionItems.size()==0);
     }
 
 

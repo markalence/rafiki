@@ -51,6 +51,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
     private static Integer isTutor = 0;
+    boolean tokenUpdated;
+    boolean coursesRetrieved;
+    boolean interactionsRetrieved;
+    boolean scheduleRetrieved;
+    boolean announcementsRetrieved;
 
     FirebaseFirestore db;
 
@@ -158,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+        tokenUpdated = true;
     }
 
     public void getStudentCourses() {
@@ -184,6 +190,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+        coursesRetrieved = true;
+        announcementsRetrieved = true;
+
     }
 
     public void getAnsweredQuestions() {
@@ -203,6 +212,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+        interactionsRetrieved = true;
     }
 
     public void getSchedule() {
@@ -240,6 +250,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        scheduleRetrieved = true;
     }
 
     public void getCourseList() {
@@ -276,6 +287,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         }
+        announcementsRetrieved = true;
     }
 
     public void getData() {
@@ -288,6 +300,7 @@ public class LoginActivity extends AppCompatActivity {
         getAnsweredQuestions();
         getCourseList();
         getSchedule();
+
     }
 
 }
