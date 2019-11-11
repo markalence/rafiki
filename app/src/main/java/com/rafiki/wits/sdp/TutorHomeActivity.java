@@ -155,6 +155,9 @@ public class TutorHomeActivity extends AppCompatActivity
             Intent intent = new Intent(TutorHomeActivity.this,TutorScheduleActivity.class);
             startActivity(intent);
         }
+        else if(id == R.id.announcement){
+            System.out.println("announcement");
+        }
         else if(id == R.id.logout){
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.context);
             mEditor = mSharedPreferences.edit();
