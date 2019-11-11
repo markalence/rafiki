@@ -206,8 +206,8 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             String endDateString = sdf.format(endDate);
             final String endDay = initialDateString.split(":")[0];
 
-            startTimeSpinner.setSelection(ArrayUtils.indexOf(r.getStringArray(R.array.weekDayTimeArray),initialDateString.split(":")[1] + ":" + initialDateString.split(":")[2]));
-            endTimeSpinner.setSelection(ArrayUtils.indexOf(r.getStringArray(R.array.weekDayTimeArray),endDateString.split(":")[1] + ":" + endDateString.split(":")[2]));
+            startTimeSpinner.setSelection(ArrayUtils.indexOf(r.getStringArray(R.array.weekDayTimeArray), initialDateString.split(":")[1] + ":" + initialDateString.split(":")[2]));
+            endTimeSpinner.setSelection(ArrayUtils.indexOf(r.getStringArray(R.array.weekDayTimeArray), endDateString.split(":")[1] + ":" + endDateString.split(":")[2]));
             startTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

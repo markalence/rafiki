@@ -156,7 +156,8 @@ public class TutorHomeActivity extends AppCompatActivity
             startActivity(intent);
         }
         else if(id == R.id.announcement){
-            System.out.println("announcement");
+            Announcement announcement = new Announcement(this,getLayoutInflater());
+            announcement.getCourseSelection();
         }
         else if(id == R.id.logout){
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.context);
