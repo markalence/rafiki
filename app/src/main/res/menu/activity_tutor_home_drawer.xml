@@ -12,6 +12,11 @@
             android:id="@+id/announcement"
             android:icon="@drawable/ic_chat_black_24dp"
             android:title="Make announcement" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_arrow_back_black_24dp"
+            android:title="Log out"
+            />
     </group>
 
 

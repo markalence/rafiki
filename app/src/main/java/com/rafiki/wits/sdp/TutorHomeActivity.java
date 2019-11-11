@@ -2,6 +2,7 @@ package com.rafiki.wits.sdp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +48,8 @@ public class TutorHomeActivity extends AppCompatActivity
     public PendingQuestionAdapter pqa;
     private RecyclerView recyclerView;
     public FirebaseFirestore db;
+    public SharedPreferences mSharedPreferences;
+    public SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +153,14 @@ public class TutorHomeActivity extends AppCompatActivity
         int id = item.getItemId();
         if(id == R.id.sessions){
             Intent intent = new Intent(TutorHomeActivity.this,TutorScheduleActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.logout){
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.context);
+            mEditor = mSharedPreferences.edit();
+            mEditor.clear();
+            mEditor.commit();
+            Intent intent = new Intent(TutorHomeActivity.this,LoginActivity.class);
             startActivity(intent);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

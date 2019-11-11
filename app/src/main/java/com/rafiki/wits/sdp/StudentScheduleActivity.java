@@ -3,6 +3,9 @@ package com.rafiki.wits.sdp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +25,7 @@ public class StudentScheduleActivity extends AppCompatActivity {
     ArrayList<HashMap<String,Object>> upcomingTuts = new ArrayList<>();
     static TutAdapter tutAdapter;
     static Toolbar toolbar;
+    private ImageButton deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,9 @@ public class StudentScheduleActivity extends AppCompatActivity {
         if(LoginActivity.upcomingTuts != null){
             upcomingTuts = LoginActivity.upcomingTuts;
         }
+        deleteButton = findViewById(R.id.deleteButton);
+        deleteButton = findViewById(R.id.deleteButton);
+        deleteButton.setVisibility(View.INVISIBLE);
         sessionItems.clear();
         toolbarInit();
         recyclerViewInit();

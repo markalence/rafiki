@@ -33,13 +33,19 @@ public class TutAdapter extends RecyclerView.Adapter<TutAdapter.ViewHolder> {
     ArrayList<HashMap<String, Object>> mDataset;
     Context mContext;
     private String DATE_FORMAT_SHORT = "dd/MM";
+    private String DATE_FORMAT_LONG = "EEEE, MMMM dd";
+    private String HOUR_FORMAT = "kk:mm";
     Resources r;
-    SimpleDateFormat simpleDateFormatShort = new SimpleDateFormat(DATE_FORMAT_SHORT);
+    SimpleDateFormat sdfs = new SimpleDateFormat(DATE_FORMAT_SHORT);
+    SimpleDateFormat sdfl = new SimpleDateFormat(DATE_FORMAT_LONG);
+    SimpleDateFormat sdfh = new SimpleDateFormat(HOUR_FORMAT);
 
 
     public TutAdapter(Context context, ArrayList<HashMap<String, Object>> myDataset) {
         mDataset = myDataset;
-        if(myDataset == null){mDataset = new ArrayList<>();}
+        if (myDataset == null) {
+            mDataset = new ArrayList<>();
+        }
         mContext = context;
         r = mContext.getResources();
 
@@ -59,16 +65,35 @@ public class TutAdapter extends RecyclerView.Adapter<TutAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final TutAdapter.ViewHolder holder, int position) {
 
         holder.sessionLayout.setBackgroundResource(R.drawable.bottomline);
-        final Timestamp timestamp = (Timestamp) mDataset.get(position).get(r.getString(R.string.DATE));
-        final Date dateRecord = timestamp.toDate();
-        final String dateStringShort = simpleDateFormatShort.format(dateRecord);
+        final Timestamp sTimestamp = (Timestamp) mDataset.get(position).get("startTime");
+        final Date sdateRecord = sTimestamp.toDate();
+        final Timestamp eTimestamp = (Timestamp) mDataset.get(position).get("endTime");
+        final Date edateRecord = eTimestamp.toDate();
+        long diff = edateRecord.getTime() - sdateRecord.getTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        String duration;
+        if (minutes < 60) {
+            duration = minutes + " minutes";
+        } else {
+            duration = minutes % 60 == 0 ? (int) hours + " hours" : (int) hours + " hour(s) and " + minutes % 60 + " minutes";
+        }
+        final String dateStringShort = sdfs.format(sdateRecord);
         final TextDrawable drawableFront = TextDrawable.builder()
                 .beginConfig()
-                .fontSize((int)((18 *Resources.getSystem().getDisplayMetrics().density)))
+                .fontSize((int) ((18 * Resources.getSystem().getDisplayMetrics().density)))
                 .endConfig()
                 .buildRound(dateStringShort, ColorGenerator.MATERIAL.getRandomColor());
         drawableFront.setPadding(30, 30, 30, 30);
-        holder.sessionInfo.setText(mDataset.get(position).get("courseCode").toString().toUpperCase());
+        holder.sessionInfo.setText(mDataset.get(position).get("courseCode").toString().toUpperCase()
+                + "\n"
+                + sdfl.format(sdateRecord)
+                + "\n"
+                + "Starts at: " + sdfh.format(sdateRecord)
+                + "\nDuration: " + duration
+
+        );
         holder.imageView.setImageDrawable(drawableFront);
     }
 
