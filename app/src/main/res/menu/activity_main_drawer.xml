@@ -25,10 +25,15 @@
                 android:title="Subscribe to a course"
                 />
             <item
+                android:id="@+id/announcement"
+                android:icon="@drawable/ic_chat_black_24dp"
+                android:title="Announcements" />
+            <item
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_arrow_back_black_24dp"
                 android:title="Log out"
                 />
+
 
         </menu>
     </item>

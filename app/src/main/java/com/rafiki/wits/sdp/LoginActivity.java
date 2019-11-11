@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     public static String password;
     public static ArrayList<HashMap<String, Object>> interactionList;
     public static ArrayList<HashMap<String, Object>> upcomingTuts;
+    public static ArrayList<HashMap<String, Object>> announcements;
     public static ArrayList<String> courseCodes;
     public SharedPreferences mSharedPreferences;
     public SharedPreferences.Editor mEditor;
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         interactionList = new ArrayList<>();
+        announcements = new ArrayList<>();
         context = this;
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -145,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void updateToken() {
-        System.out.println("TOKEN HERE    " +  mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
+        System.out.println("TOKEN HERE    " + mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null));
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
                 .update(r.getString(R.string.DEVICE_TOKEN), mSharedPreferences.getString(r.getString(R.string.DEVICE_TOKEN), null))
@@ -175,12 +177,10 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             if (task.getResult().getData().get("role") == null) {
                                 isTutor = 0;
-                            }
-                            else if(task.getResult().getData().get("role").equals("tutor")){
+                            } else if (task.getResult().getData().get("role").equals("tutor")) {
                                 isTutor = 1;
                             }
-                            System.out.println(task.getResult().getData() + " DATAAAA");
-
+                            getAnnouncements();
                         }
                     }
                 });
@@ -258,21 +258,36 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public boolean getData() {
+    public void getAnnouncements() {
+        System.out.println("COURSES " + studentCourses.toString());
+        for (String s : studentCourses) {
+            db.collection("announcements")
+                    .whereEqualTo("courseCode", s)
+                    .get(Source.SERVER)
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot doc : task.getResult()) {
+                                    announcements.add((HashMap<String, Object>) doc.getData());
+                                    System.out.println("ANNOUNCEMENTS " + announcements.toString());
+                                }
+                            }
+                        }
+                    });
+        }
+    }
+
+    public void getData() {
 
         interactionList = new ArrayList<>();
         upcomingTuts = new ArrayList<>();
         courseCodes = new ArrayList<>();
-
         updateToken();
         getStudentCourses();
         getAnsweredQuestions();
         getCourseList();
         getSchedule();
-
-
-        return true;
-
     }
 
 }

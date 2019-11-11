@@ -35,7 +35,6 @@ public class StudentScheduleActivity extends AppCompatActivity {
             upcomingTuts = LoginActivity.upcomingTuts;
         }
         deleteButton = findViewById(R.id.deleteButton);
-        deleteButton = findViewById(R.id.deleteButton);
         deleteButton.setVisibility(View.INVISIBLE);
         sessionItems.clear();
         toolbarInit();

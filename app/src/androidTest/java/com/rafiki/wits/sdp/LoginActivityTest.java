@@ -43,12 +43,6 @@ public class LoginActivityTest {
         assertNotNull(mActivity.mSharedPreferences);
     }
 
-    @Test
-    @UiThreadTest
-    public void getData() {
-        assertTrue(mActivity.getData());
-    }
-
 
 //    @Test
 //    public void progressBarInit(){

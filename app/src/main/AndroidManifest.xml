@@ -13,6 +13,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
         <activity android:name=".TutorScheduleActivity"></activity>
+        <activity android:name=".AnnouncementActivity"></activity>
         <activity
             android:name=".QRActivity"
             android:label="QRActivity" />
