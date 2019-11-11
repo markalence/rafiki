@@ -9,19 +9,16 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,13 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
-
 import org.apache.commons.lang3.ArrayUtils;
-
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -53,6 +46,8 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
     HashMap<String, Object> sessionCopy;
     Resources r;
     SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd:kk:mm");
+    boolean rightSwiped = false;
+    boolean leftSwiped = false;
 
 
     SessionSwipeController(Context context, LayoutInflater inflater) {
@@ -123,15 +118,27 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
 
-        sessionCopy = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(viewHolder.getAdapterPosition()).clone();
+   handleSwipe(viewHolder,direction);
+
+    }
+
+    public boolean handleSwipe(final RecyclerView.ViewHolder viewHolder, int direction) {
+        final int copyPosition;
+        if(viewHolder.getAdapterPosition() == -1){
+            sessionCopy = LoginActivity.upcomingTuts.get(0);
+            copyPosition = 0;
+        }
+        else {
+            sessionCopy = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(viewHolder.getAdapterPosition()).clone();
+            copyPosition = viewHolder.getAdapterPosition();
+        }
         sessionCopy.remove("id");
         System.out.println(direction);
         if (direction == ItemTouchHelper.RIGHT) {
 
             clickable = true;
-
+            rightSwiped = true;
             final TutorScheduleAdapter tutorScheduleAdapter = (TutorScheduleAdapter) TutorScheduleActivity.recyclerView.getAdapter();
-            final int copyPosition = viewHolder.getAdapterPosition();
             final HashMap<String, Object> copyMap = tutorScheduleAdapter.mDataset.get(copyPosition);
             copyMap.remove("id");
 
@@ -187,7 +194,13 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 snackbar.show();
             }
         } else {
-            final int index = viewHolder.getAdapterPosition();
+            final int index;
+            if(viewHolder.getAdapterPosition() == -1){
+                index = 0;
+            }
+            else{
+                index = viewHolder.getAdapterPosition();
+            }
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             View dialogView = mInflater.inflate(R.layout.edit_session_dialog, null);
             builder.setView(dialogView);
@@ -310,11 +323,12 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             });
 
             dialog.show();
+            leftSwiped = true;
         }
-
+        return true;
     }
 
-    public void drawEditTab(View itemView, float dX, int itemHeight, Canvas c) {
+    public boolean drawEditTab(View itemView, float dX, int itemHeight, Canvas c) {
         ColorDrawable editBackground = new ColorDrawable(Color.BLUE);
 
 
@@ -335,5 +349,6 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
         // Draw the delete icon
         editIcon.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
         editIcon.draw(c);
+        return true;
     }
 }

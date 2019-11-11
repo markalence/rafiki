@@ -23,7 +23,7 @@ public class TutorScheduleActivity extends AppCompatActivity {
 
     static ArrayList<HashMap<String, Object>> sessionItems = new ArrayList<>();
     static RecyclerView recyclerView;
-    static TutorScheduleAdapter sessionAdapter;
+    public static TutorScheduleAdapter sessionAdapter;
     static ImageButton deleteButton;
     static Toolbar toolbar;
     static TextView toolbarTitle;
@@ -45,12 +45,13 @@ public class TutorScheduleActivity extends AppCompatActivity {
     }
 
 
-    public void toolbarInit() {
+    public boolean toolbarInit() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        return true;
     }
 
     @Override
@@ -63,13 +64,17 @@ public class TutorScheduleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void recyclerViewInit() {
+    public boolean recyclerViewInit() {
+        if(LoginActivity.upcomingTuts == null){
+            LoginActivity.upcomingTuts = new ArrayList<>();
+        }
         recyclerView = findViewById(R.id.sessionSheet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sessionAdapter = new TutorScheduleAdapter(this, LoginActivity.upcomingTuts);
         recyclerView.setAdapter(sessionAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        return true;
     }
 
 

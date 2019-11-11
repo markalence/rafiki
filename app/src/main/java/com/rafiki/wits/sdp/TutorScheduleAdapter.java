@@ -49,10 +49,12 @@ public class TutorScheduleAdapter extends RecyclerView.Adapter<TutorScheduleAdap
     private ArrayList<HashMap<String, Object>> copyItems;
     private ArrayList<Integer> indexList;
     private ArrayList<HashMap<String, Object>> copyDataset;
+    ArrayList<RecyclerView.ViewHolder> holders = new ArrayList<>();
     Resources r;
     SimpleDateFormat simpleDateFormatLong = new SimpleDateFormat(DATE_FORMAT_LONG);
     SimpleDateFormat simpleDateFormatShort = new SimpleDateFormat(DATE_FORMAT_SHORT);
     boolean clickable;
+    boolean bound = false;
 
 
     public TutorScheduleAdapter(Context context, ArrayList<HashMap<String, Object>> myDataset) {
@@ -147,7 +149,8 @@ public class TutorScheduleAdapter extends RecyclerView.Adapter<TutorScheduleAdap
             }
         });
         //holder.imageView.setPadding(20,20,20,20)
-
+        holders.add(holder);
+bound = true;
     }
 
     @Override
@@ -155,7 +158,7 @@ public class TutorScheduleAdapter extends RecyclerView.Adapter<TutorScheduleAdap
         return mDataset.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView sessionInfo;
         String documentId;
@@ -172,7 +175,7 @@ public class TutorScheduleAdapter extends RecyclerView.Adapter<TutorScheduleAdap
         }
     }
 
-    public void deleteSessions() {
+    public boolean deleteSessions() {
 
         copyDataset = (ArrayList<HashMap<String, Object>>) mDataset.clone();
         for (int i = 0; i < selectedItems.size(); ++i) {
@@ -236,9 +239,10 @@ public class TutorScheduleAdapter extends RecyclerView.Adapter<TutorScheduleAdap
 
         snackbar.setActionTextColor(Color.rgb(25, 172, 172));
         snackbar.show();
+        return true;
     }
 
-    public void showBackOfDrawable(ViewHolder holder, int position) {
+    public boolean showBackOfDrawable(ViewHolder holder, int position) {
 
         holder.imageView.setImageResource(R.drawable.ic_check_white_24dp);
         holder.imageView.setBackgroundResource(R.drawable.circle);
@@ -251,10 +255,10 @@ public class TutorScheduleAdapter extends RecyclerView.Adapter<TutorScheduleAdap
         TutorScheduleActivity.deleteButton.setVisibility(View.VISIBLE);
         TutorScheduleActivity.deleteButton.setFocusable(true);
 
-
+        return true;
     }
 
-    public void showFrontOfDrawable(ViewHolder holder, int position, String dateStringShort) {
+    public boolean showFrontOfDrawable(ViewHolder holder, int position, String dateStringShort) {
 
         final TextDrawable drawableFront = TextDrawable.builder()
                 .beginConfig()
@@ -277,5 +281,6 @@ public class TutorScheduleAdapter extends RecyclerView.Adapter<TutorScheduleAdap
             TutorScheduleActivity.toolbar.setBackgroundColor(Color.rgb(25, 205, 205));
             TutorScheduleActivity.deleteButton.setVisibility(View.INVISIBLE);
         }
+        return true;
     }
 }
