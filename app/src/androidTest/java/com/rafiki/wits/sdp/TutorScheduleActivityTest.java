@@ -57,6 +57,9 @@ public class TutorScheduleActivityTest {
         assertTrue(mActivity.swipeController.handleSwipe(vh, ItemTouchHelper.RIGHT));
         assertTrue(mActivity.swipeController.leftSwiped);
         assertTrue(mActivity.swipeController.rightSwiped);
+//        assertTrue(mActivity.swipeController.editTabDrawn);
+        assertTrue(mActivity.swipeController.nothingSelected("191015:14:45",0,"191015:14:45","endTime"));
+        assertTrue(mActivity.swipeController.itemSelected("191015:14:45","191015:14:45",""));
     }
 
 

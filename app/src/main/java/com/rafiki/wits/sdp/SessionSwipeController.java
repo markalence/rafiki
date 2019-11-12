@@ -15,10 +15,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,7 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
+
 import org.apache.commons.lang3.ArrayUtils;
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,7 +52,8 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
     SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd:kk:mm");
     boolean rightSwiped = false;
     boolean leftSwiped = false;
-
+    boolean editTabDrawn = false;
+    HashMap<String, Object> copyDay = new HashMap<>();
 
     SessionSwipeController(Context context, LayoutInflater inflater) {
         mContext = context;
@@ -118,17 +123,16 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
 
-   handleSwipe(viewHolder,direction);
+        handleSwipe(viewHolder, direction);
 
     }
 
     public boolean handleSwipe(final RecyclerView.ViewHolder viewHolder, int direction) {
         final int copyPosition;
-        if(viewHolder.getAdapterPosition() == -1){
+        if (viewHolder.getAdapterPosition() == -1) {
             sessionCopy = LoginActivity.upcomingTuts.get(0);
             copyPosition = 0;
-        }
-        else {
+        } else {
             sessionCopy = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(viewHolder.getAdapterPosition()).clone();
             copyPosition = viewHolder.getAdapterPosition();
         }
@@ -195,10 +199,9 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             }
         } else {
             final int index;
-            if(viewHolder.getAdapterPosition() == -1){
+            if (viewHolder.getAdapterPosition() == -1) {
                 index = 0;
-            }
-            else{
+            } else {
                 index = viewHolder.getAdapterPosition();
             }
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -211,7 +214,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             System.out.println("TUTS " + LoginActivity.upcomingTuts);
             final Timestamp initialTimestamp = (Timestamp) LoginActivity.upcomingTuts.get(index).get("startTime");
             Date initialDate = initialTimestamp.toDate();
-            final HashMap<String, Object> copyDay = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(index).clone();
+            copyDay = (HashMap<String, Object>) LoginActivity.upcomingTuts.get(index).clone();
             String initialDateString = sdf.format(initialDate);
             final String initialDay = initialDateString.split(":")[0];
             final Timestamp endTimestamp = (Timestamp) LoginActivity.upcomingTuts.get(index).get("endTime");
@@ -224,15 +227,9 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
             startTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String item = (String) parent.getItemAtPosition(position);
-                    String newHours = item.split(":")[0];
-                    String newMinutes = item.split(":")[1];
-                    String newDateString = initialDay + ":" + newHours + ":" + newMinutes;
-                    ParsePosition parse = new ParsePosition(0);
-                    Date newDate = sdf.parse(newDateString, parse);
-                    Timestamp newTimestamp = new Timestamp(newDate);
 
-                    copyDay.put("startTime", newTimestamp);
+                    String item = (String) parent.getItemAtPosition(position);
+                    itemSelected(item, initialDay, "startTime");
 
                 }
 
@@ -241,14 +238,7 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
 
                     int position = 0;
                     String item = (String) parent.getItemAtPosition(position);
-                    String newHours = item.split(":")[0];
-                    String newMinutes = item.split(":")[1];
-                    String newDateString = initialDay + ":" + newHours + ":" + newMinutes;
-                    ParsePosition parse = new ParsePosition(0);
-                    Date newDate = sdf.parse(newDateString, parse);
-                    Timestamp newTimestamp = new Timestamp(newDate);
-
-                    LoginActivity.upcomingTuts.get(index).put("endTime", newTimestamp);
+                    nothingSelected(item, position, initialDay, "endTime");
 
                 }
             });
@@ -256,31 +246,14 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String item = (String) parent.getItemAtPosition(position);
-                    String newHours = item.split(":")[0];
-                    String newMinutes = item.split(":")[1];
-                    String newDateString = endDay + ":" + newHours + ":" + newMinutes;
-                    ParsePosition parse = new ParsePosition(0);
-                    Date newDate = sdf.parse(newDateString, parse);
-                    Timestamp newTimestamp = new Timestamp(newDate);
-
-                    copyDay.put("endTime", newTimestamp);
-
+                    itemSelected(item, initialDay, "endTime");
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-
                     int position = 0;
                     String item = (String) parent.getItemAtPosition(position);
-                    String newHours = item.split(":")[0];
-                    String newMinutes = item.split(":")[1];
-                    String newDateString = initialDay + ":" + newHours + ":" + newMinutes;
-                    ParsePosition parse = new ParsePosition(0);
-                    Date newDate = sdf.parse(newDateString, parse);
-                    Timestamp newTimestamp = new Timestamp(newDate);
-
-                    LoginActivity.upcomingTuts.get(index).put("endTime", newTimestamp);
-
+                    nothingSelected(item, position, endDay, "endTime");
                 }
             });
 
@@ -322,7 +295,9 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
                 }
             });
 
-            dialog.show();
+            if (LoginActivity.studentNum != null) {
+                dialog.show();
+            }
             leftSwiped = true;
         }
         return true;
@@ -349,6 +324,29 @@ public class SessionSwipeController extends ItemTouchHelper.Callback {
         // Draw the delete icon
         editIcon.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom);
         editIcon.draw(c);
+        editTabDrawn = true;
+        return true;
+    }
+
+    public boolean nothingSelected(String item, int position, String day, String sore) {
+        String newHours = item.split(":")[0];
+        String newMinutes = item.split(":")[1];
+        String newDateString = day + ":" + newHours + ":" + newMinutes;
+        ParsePosition parse = new ParsePosition(0);
+        Date newDate = sdf.parse(newDateString, parse);
+        Timestamp newTimestamp = new Timestamp(newDate);
+        copyDay.put(sore, newTimestamp);
+        return true;
+    }
+
+    public boolean itemSelected(String item, String day, String sore) {
+        String newHours = item.split(":")[0];
+        String newMinutes = item.split(":")[1];
+        String newDateString = day + ":" + newHours + ":" + newMinutes;
+        ParsePosition parse = new ParsePosition(0);
+        Date newDate = sdf.parse(newDateString, parse);
+        Timestamp newTimestamp = new Timestamp(newDate);
+        copyDay.put(sore, newTimestamp);
         return true;
     }
 }

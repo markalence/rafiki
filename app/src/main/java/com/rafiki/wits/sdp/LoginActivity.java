@@ -167,6 +167,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getStudentCourses() {
         isTutor = 0;
+        coursesRetrieved = true;
+        announcementsRetrieved = true;
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
                 .get()
@@ -189,12 +191,12 @@ public class LoginActivity extends AppCompatActivity {
                                     isTutor = 1;
                                 }
                             }
+                            coursesRetrieved = true;
+                            announcementsRetrieved = true;
                             getAnnouncements();
                         }
                     }
                 });
-        coursesRetrieved = true;
-        announcementsRetrieved = true;
 
     }
 
@@ -294,8 +296,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         }
-        getAnsweredQuestions();
         announcementsRetrieved = true;
+        getAnsweredQuestions();
     }
 
     public void getData() {
@@ -304,7 +306,6 @@ public class LoginActivity extends AppCompatActivity {
         upcomingTuts = new ArrayList<>();
         courseCodes = new ArrayList<>();
         updateToken();
-
     }
 
 }
