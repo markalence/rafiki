@@ -44,6 +44,8 @@ public class MainActivityTest {
         assertNotNull(sa.cancel);
         sa.addCourse();
         sa.addStudentToCourse();
+        mActivity.onBackPressed();
+        mActivity.onBackPressed();
 
     }
 

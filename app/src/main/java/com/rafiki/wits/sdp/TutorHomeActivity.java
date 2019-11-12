@@ -66,13 +66,10 @@ public class TutorHomeActivity extends AppCompatActivity
     }
 
     public boolean setRecyclerView() {
-        if (LoginActivity.interactionList != null) {
             recyclerView = findViewById(R.id.questionList);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(pqa);
             return true;
-        }
-        return false;
     }
 
 
@@ -98,7 +95,7 @@ public class TutorHomeActivity extends AppCompatActivity
 
     }
 
-    public void makeNavLayout() {
+    public boolean makeNavLayout() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -118,6 +115,7 @@ public class TutorHomeActivity extends AppCompatActivity
 //        gradeView = navigationView.getHeaderView(0).findViewById(R.id.grade);
         nameView.setText(LoginActivity.studentNum);
         Picasso.get().load(R.mipmap.header_background).into(header);
+        return true;
     }
 
     @Override
