@@ -51,6 +51,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
+        System.out.println("REVVVVVVV");
         j = new JSONObject(remoteMessage.getData());
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -106,7 +107,7 @@ public class FirebaseIDService extends FirebaseMessagingService {
                         .setPriority(Notification.PRIORITY_HIGH);
 
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-                notificationManagerCompat.notify(1, notification.build());
+                notificationManagerCompat.notify(0, notification.build());
             } else {
 
 

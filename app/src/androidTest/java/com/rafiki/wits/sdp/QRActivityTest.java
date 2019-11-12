@@ -31,7 +31,7 @@ public class QRActivityTest {
     public void test(){
         assertTrue(mActivity.setApiVersion(Build.VERSION.SDK_INT));
         System.out.println(mActivity.checkPermission() + " BOLEAN");
-        assertFalse(mActivity.checkPermission());
+        assertTrue(mActivity.checkPermission());
         assertTrue(mActivity.requestPermission());
         assertTrue(mActivity.created);
 

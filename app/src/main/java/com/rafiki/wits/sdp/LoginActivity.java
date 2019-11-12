@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         interactionList = new ArrayList<>();
         announcements = new ArrayList<>();
         context = this;
@@ -137,8 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
+                                    getData();
                                 }
                                 if (!task.isSuccessful()) {
                                     getLoginInfo();
