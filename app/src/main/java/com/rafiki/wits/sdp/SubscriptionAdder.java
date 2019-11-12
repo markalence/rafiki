@@ -117,8 +117,10 @@ public class SubscriptionAdder {
                             Toast.makeText(context, "You have successfully subscribed", Toast.LENGTH_LONG)
                                     .show();
                             dialog.hide();
+                            courseAdded = true;
                             addStudentToCourse();
                         } else {
+                            courseAdded = true;
                             Toast.makeText(context, "Error. Try again later", Toast.LENGTH_LONG)
                                     .show();
                             dialog.hide();
@@ -126,7 +128,6 @@ public class SubscriptionAdder {
                     }
                 });
 
-        courseAdded = true;
     }
 
     public void addStudentToCourse() {

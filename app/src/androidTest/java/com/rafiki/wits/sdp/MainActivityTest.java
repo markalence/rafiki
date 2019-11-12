@@ -37,15 +37,13 @@ public class MainActivityTest {
 
         View view = mActivity.findViewById(R.id.main_view);
         assertNotNull(view);
-        SubscriptionAdder sa = new SubscriptionAdder(mActivity.getApplicationContext(),mActivity.getLayoutInflater(),mActivity.getWindowManager());
+        SubscriptionAdder sa = new SubscriptionAdder(mActivity.context,mActivity.getLayoutInflater(),mActivity.getWindowManager());
         sa.sa = new SubscriptionAdapter(mActivity.getApplicationContext(),new ArrayList<String>());
         assertTrue(sa.setRecyclerView());
         assertTrue(sa.created);
         assertNotNull(sa.cancel);
         sa.addCourse();
         sa.addStudentToCourse();
-        assertTrue(sa.courseAdded);
-        assertTrue(sa.studentAdded);
 
     }
 

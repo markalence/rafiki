@@ -1,6 +1,7 @@
 package com.rafiki.wits.sdp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     public SharedPreferences mSharedPreferences;
     public SharedPreferences.Editor mEditor;
+    public Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
