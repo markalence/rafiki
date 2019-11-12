@@ -18,8 +18,8 @@ db.settings({timestampsInSnapshots: true});
 exports.sendData = functions.pubsub.topic('daily-tick').onPublish(() => {
 
     return db.collection('schedule')
-        .where('date', '>', today)
-        .where('date', '<', tomorrow)
+        .where('startTime', '>', today)
+        .where('startTime', '<', tomorrow)
         .get()
         .then(snapshot => {
             let promises = [];
@@ -27,6 +27,7 @@ exports.sendData = functions.pubsub.topic('daily-tick').onPublish(() => {
                 promises.push(db.collection('courses')
                     .where('courseCode', '==', course.data().courseCode)
                     .get())
+                    console.log(course.data());
             });
             return Promise.all(promises);
         })
@@ -46,6 +47,7 @@ exports.sendData = functions.pubsub.topic('daily-tick').onPublish(() => {
                     promises.push(db.collection('students')
                         .where('studentNumber', '==', student.data().studentNumber)
                         .get())
+                        console.log(student.data());
                 });
             });
             return Promise.all(promises);

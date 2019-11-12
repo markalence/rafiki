@@ -34,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText confirmPassword;
     private Button registerButton;
     private FirebaseFirestore db;
+    boolean info;
     RadioButton radioButton;
     SharedPreferences.Editor mEditor;
     SharedPreferences mSharedPreferences;
@@ -75,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private boolean inputIsValid() {
+    public boolean inputIsValid() {
 
         if (studentNumber.getText().toString().length() == 7) {
             if (password.getText().toString().equals(confirmPassword.getText().toString())) {
@@ -107,11 +108,9 @@ public class RegisterActivity extends AppCompatActivity {
         Map userInfo = new HashMap();
         userInfo.put("studentNumber",studentNumber.getText().toString());
         if(radioButton.isChecked()){
-            System.out.println("HELL YUH");
             userInfo.put("role","tutor");
         }
         else{
-            System.out.println("HELL NAH");
             userInfo.put("role","student");
         }
         db.collection("students").document(studentNumber.getText().toString())
@@ -126,5 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+        info = true;
     }
 }

@@ -30,7 +30,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 CharSequence name = remoteInput.getCharSequence("rafiki");
                 NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                mNotificationManager.cancel(0);
+                mNotificationManager.cancel(1);
 
             }
         }

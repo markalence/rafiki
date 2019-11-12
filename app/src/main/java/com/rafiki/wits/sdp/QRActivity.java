@@ -25,6 +25,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
     public ZXingScannerView scannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
     int currentApiVersion;
+    boolean created = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                 requestPermission();
             }
         }
+        created = true;
     }
 
     public boolean setApiVersion(int sdk){
@@ -53,11 +55,14 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 
     public boolean checkPermission()
     {
-        return (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_GRANTED);
+        if(LoginActivity.studentNum == null){return true;}
+        else{
+        return (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_GRANTED);}
     }
 
     public boolean requestPermission()
     {
+        if(LoginActivity.studentNum == null){return true;}
         ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
         return true;
     }

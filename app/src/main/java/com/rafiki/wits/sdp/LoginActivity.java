@@ -181,10 +181,12 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 studentCourses = (ArrayList<String>) task.getResult().getData().get("courses");
                             }
-                            if (task.getResult().getData().get("role") == null) {
-                                isTutor = 0;
-                            } else if (task.getResult().getData().get("role").equals("tutor")) {
-                                isTutor = 1;
+                            if (task.getResult().getData() != null) {
+                                if (task.getResult().getData().get("role") == null) {
+                                    isTutor = 0;
+                                } else if (task.getResult().getData().get("role").equals("tutor")) {
+                                    isTutor = 1;
+                                }
                             }
                             getAnnouncements();
                         }

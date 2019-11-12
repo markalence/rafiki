@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -35,12 +36,12 @@ public class FirebaseIDService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String s) {
-        super.onNewToken(s);
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
         mEditor.putString("deviceToken", s);
         mEditor.commit();
 
+        super.onNewToken(s);
         Log.d("NEW TOKEN: ", s);
     }
 
@@ -52,6 +53,24 @@ public class FirebaseIDService extends FirebaseMessagingService {
 
         j = new JSONObject(remoteMessage.getData());
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            int notifyID = 1;
+            String CHANNEL_ID = "my_channel_01";// The id of the channel.
+            CharSequence name = "rafiki";// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            Notification notification = new Notification.Builder(getApplicationContext())
+                    .setContentText("Reminder that you have a tutorial tomrrow")
+                    .setSmallIcon(R.mipmap.ic_icon_round)
+                    .setChannelId(CHANNEL_ID)
+                    .build();
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.createNotificationChannel(mChannel);
+
+// Issue the notification.
+            mNotificationManager.notify(notifyID , notification);
+        }
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
             Intent intent = new Intent(this, NotificationReceiver.class);

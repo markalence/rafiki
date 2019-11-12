@@ -48,35 +48,7 @@ public class RecordSheetDialog extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        else{
-            System.out.println("THEY NULL????");}
 
-        Button confirm = findViewById(R.id.confirm);
-        Button cancel = findViewById(R.id.cancel);
-
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (module.getText().length() != 0 && hours.getText().length() != 0) {
-                    docData.put("module",module.getText().toString());
-                    docData.put("hours", hours.getText().toString());
-                    firestore.collection("test")
-                            .add(docData);
-                    NotificationManager mNotificationManager = (NotificationManager)
-                            getSystemService(Context.NOTIFICATION_SERVICE);
-                    mNotificationManager.cancel(1);
-                    mNotificationManager.cancel(2);
-                    finish();
-                }
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
     }
 
