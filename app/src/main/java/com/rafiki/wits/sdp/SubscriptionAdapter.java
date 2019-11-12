@@ -35,7 +35,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
     Context mContext;
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-    private ArrayList<String> selectedItems;
+    private ArrayList<String> selectedItems = new ArrayList<>();
     private ArrayList<HashMap<String, Object>> copyItems;
     private ArrayList<Integer> indexList;
     private ArrayList<HashMap<String,Object>> copyDataset;

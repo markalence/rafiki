@@ -39,6 +39,9 @@ public class SubscriptionAdder {
     View view;
     FirebaseFirestore db;
     Dialog dialog;
+    boolean created;
+    boolean courseAdded;
+    boolean studentAdded;
 
     SubscriptionAdder(Context context, LayoutInflater inflater, WindowManager wm) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -64,14 +67,14 @@ public class SubscriptionAdder {
                 dialog.dismiss();
             }
         });
-        if(context != null) {
+        if (LoginActivity.password != null) {
             dialog.show();
         }
+        created = true;
 
     }
 
     public boolean setRecyclerView() {
-        if (LoginActivity.interactionList != null) {
             recyclerView = view.findViewById(R.id.subscriptionList);
             DisplayMetrics displayMetrics = new DisplayMetrics();
             wm.getDefaultDisplay().getMetrics(displayMetrics);
@@ -79,13 +82,11 @@ public class SubscriptionAdder {
             recyclerView.setMinimumWidth(width);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             sa = new SubscriptionAdapter(context, LoginActivity.courseCodes);
-            System.out.println(LoginActivity.courseCodes.size() +  "  SIZEEE");
+            System.out.println(LoginActivity.courseCodes.size() + "  SIZEEE");
             recyclerView.setAdapter(sa);
             textView = view.findViewById(R.id.subTextView);
             textView.setTextSize(1, (float) (width * 0.015));
             return true;
-        }
-        return false;
     }
 
     //    public void addCourses(ArrayList<HashMap<String,Object> selectedItems){
@@ -94,17 +95,18 @@ public class SubscriptionAdder {
 //
 //    }
     public void addCourse() {
-        System.out.println(sa.getSelectedItems() + " HHEEERRE");
-
-        if (sa.getSelectedItems().size() == 0) {
-            dialog.dismiss();
-            return;
-        }
-        for (String course : sa.getSelectedItems()) {
-            if (!LoginActivity.studentCourses.contains(course)) {
-                LoginActivity.studentCourses.add(course);
+        if(LoginActivity.interactionList != null) {
+            if (sa.getSelectedItems().size() == 0) {
+                dialog.dismiss();
+                return;
+            }
+            for (String course : sa.getSelectedItems()) {
+                if (!LoginActivity.studentCourses.contains(course)) {
+                    LoginActivity.studentCourses.add(course);
+                }
             }
         }
+
         db.collection("students")
                 .document(LoginActivity.studentNum)
                 .update("courses", LoginActivity.studentCourses)
@@ -124,10 +126,10 @@ public class SubscriptionAdder {
                     }
                 });
 
-
+        courseAdded = true;
     }
 
-    private void addStudentToCourse() {
+    public void addStudentToCourse() {
 
         for (String course : sa.getSelectedItems()) {
             db.collection("courses")
@@ -154,7 +156,7 @@ public class SubscriptionAdder {
                         }
                     });
         }
-
+        studentAdded = true;
     }
 
 }

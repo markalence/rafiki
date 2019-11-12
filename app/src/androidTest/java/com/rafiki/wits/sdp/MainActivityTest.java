@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class MainActivityTest {
@@ -24,6 +26,8 @@ public class MainActivityTest {
     public void setUp() throws Exception {
 
         mActivity = mActivityTestRule.getActivity();
+        LoginActivity.studentNum = "0000000";
+        LoginActivity.courseCodes = new ArrayList<>();
 
     }
 
@@ -33,35 +37,44 @@ public class MainActivityTest {
 
         View view = mActivity.findViewById(R.id.main_view);
         assertNotNull(view);
+        SubscriptionAdder sa = new SubscriptionAdder(mActivity.getApplicationContext(),mActivity.getLayoutInflater(),mActivity.getWindowManager());
+        sa.sa = new SubscriptionAdapter(mActivity.getApplicationContext(),new ArrayList<String>());
+        assertTrue(sa.setRecyclerView());
+        assertTrue(sa.created);
+        assertNotNull(sa.cancel);
+        sa.addCourse();
+        sa.addStudentToCourse();
+        assertTrue(sa.courseAdded);
+        assertTrue(sa.studentAdded);
 
     }
 
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void onCreate() {
-    }
-
-    @Test
-    public void setRecyclerView() {
-
-    }
-
-    @Test
-    public void makeNavLayout() {
-
-    }
-
-    @Test
-    public void onBackPressed() {
-    }
-
-    @Test
-    public void onNavigationItemSelected() {
-    }
+//
+//    @After
+//    public void tearDown() throws Exception {
+//    }
+//
+//    @Test
+//    public void onCreate() {
+//    }
+//
+//    @Test
+//    public void setRecyclerView() {
+//
+//    }
+//
+//    @Test
+//    public void makeNavLayout() {
+//
+//    }
+//
+//    @Test
+//    public void onBackPressed() {
+//    }
+//
+//    @Test
+//    public void onNavigationItemSelected() {
+//    }
 
 
 }
