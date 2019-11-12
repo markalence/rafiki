@@ -158,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            getStudentCourses();
                         }
                     }
                 });
@@ -165,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void getStudentCourses() {
+        isTutor = 0;
         db.collection(r.getString(R.string.STUDENTS))
                 .document(studentNum)
                 .get()
@@ -172,6 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
+                            System.out.println("STUDENT DATA  " + task.getResult().getData().toString() );
                             if (task.getResult().getData() == null) {
                                 studentCourses = new ArrayList<>();
                             } else if (task.getResult().getData().get("courses") == null) {
@@ -180,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                                 studentCourses = (ArrayList<String>) task.getResult().getData().get("courses");
                             }
                             if (task.getResult().getData() != null) {
-                                if (task.getResult().getData().get("role") == null) {
+                                if (task.getResult().getData().get("role") == "student") {
                                     isTutor = 0;
                                 } else if (task.getResult().getData().get("role").equals("tutor")) {
                                     isTutor = 1;
@@ -212,6 +215,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+        System.out.println(interactionList.toString() + " HHER");
+        getCourseList();
         interactionsRetrieved = true;
     }
 
@@ -255,6 +260,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getCourseList() {
         db.collection(r.getString(R.string.COURSES))
+                .orderBy("courseCode", Query.Direction.ASCENDING)
                 .get(Source.SERVER)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -267,6 +273,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+        getSchedule();
     }
 
     public void getAnnouncements() {
@@ -287,6 +294,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         }
+        getAnsweredQuestions();
         announcementsRetrieved = true;
     }
 
@@ -296,10 +304,6 @@ public class LoginActivity extends AppCompatActivity {
         upcomingTuts = new ArrayList<>();
         courseCodes = new ArrayList<>();
         updateToken();
-        getStudentCourses();
-        getAnsweredQuestions();
-        getCourseList();
-        getSchedule();
 
     }
 

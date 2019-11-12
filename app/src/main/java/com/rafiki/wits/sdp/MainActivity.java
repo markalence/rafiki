@@ -124,14 +124,14 @@ public class MainActivity extends AppCompatActivity
             //startAnimationFromBackgroundThread();
         } else if (id == R.id.record) {
             QuestionSubmitter questionSubmitter = new QuestionSubmitter(MainActivity.this, this.getLayoutInflater());
-            questionSubmitter.questionDialogInit();
+            questionSubmitter.getCourseSelection();
         } else if (id == R.id.subscribe) {
             SubscriptionAdder sa = new SubscriptionAdder(MainActivity.this,getLayoutInflater(), getWindowManager());
         }
         else if(id == R.id.logout){
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.context);
             mEditor = mSharedPreferences.edit();
-            mEditor.clear();
+            mEditor.putString("userData","empty");
             mEditor.commit();
             Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);

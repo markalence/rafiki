@@ -89,10 +89,9 @@ public class TutorHomeActivity extends AppCompatActivity
                                 for (DocumentSnapshot doc : task.getResult()) {
                                     System.out.println(doc.getData());
                                     questions.add((HashMap<String, Object>) doc.getData());
-                                    pqa.notifyDataSetChanged();
-
                                 }
                             }
+                            pqa.notifyDataSetChanged();
                         }
                     });
         }
@@ -165,7 +164,7 @@ public class TutorHomeActivity extends AppCompatActivity
         else if(id == R.id.logout){
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.context);
             mEditor = mSharedPreferences.edit();
-            mEditor.clear();
+            mEditor.putString("userData","empty");
             mEditor.commit();
             Intent intent = new Intent(TutorHomeActivity.this,LoginActivity.class);
             startActivity(intent);

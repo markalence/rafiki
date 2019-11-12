@@ -74,10 +74,6 @@ public class FirebaseIDService extends FirebaseMessagingService {
         }
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
-            Intent intent = new Intent(this, NotificationReceiver.class);
-            intent.putExtra("documentData", j.toString());
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
             notificationBuilder = new Notification.Builder(getApplicationContext())
                     .setContentTitle("Reminder that you have a tutorial tomorrow")
                     .setColor(Color.rgb(25, 205, 205))
@@ -92,10 +88,6 @@ public class FirebaseIDService extends FirebaseMessagingService {
 
         } else {
 
-            Intent intent = new Intent(this, RecordSheetDialog.class);
-            intent.putExtra("documentData", j.toString());
-            System.out.println(j.toString());
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             if (android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.M) {
 
                 Notification.Builder notification = new Notification.Builder(getApplicationContext())
@@ -129,16 +121,5 @@ public class FirebaseIDService extends FirebaseMessagingService {
 
     }
 
-    public void createNotificationChannel() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "rafiki";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("channel", name, importance);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-    }
 }
 //dDZpbYJC1hI:APA91bFuu2zrvSafzBehgr3EK4FifPTLiK9DwEmuDzvOxkIlwmlnWlqUo9EMKboVHcmMlxIaLLdmo2qkc7r1gcLNzbxFPnyO2XwpUoZxBet3pEOjrg1dOYtFbe3wvmBzNGNjViSYpgYa
