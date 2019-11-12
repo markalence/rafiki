@@ -35,12 +35,12 @@ public class FirebaseIDService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String s) {
+        super.onNewToken(s);
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
         mEditor.putString("deviceToken", s);
         mEditor.commit();
 
-        super.onNewToken(s);
         Log.d("NEW TOKEN: ", s);
     }
 
